@@ -43,7 +43,43 @@ pos       = [[[150, 90],[400,190],[50, 190]],
              [[200,340],[300,240],[350,240]],
              [[50, 240],[400,240],[150,340]]]
 
+class Cube:
+    def __init__(self, pos, colors):
+        self.pos = pos
+        self.colors = colors
+
+    def display(self):
+        pygame.draw.rect(screen, colors[self.colors[0]], [self.pos[0][0], self.pos[0][1], 50, 50])
+        pygame.draw.rect(screen, colors[self.colors[1]], [self.pos[1][0], self.pos[1][1], 50, 50])
+        pygame.draw.rect(screen, colors[self.colors[2]], [self.pos[2][0], self.pos[2][1], 50, 50])
+    
+    def move(self):
+        if move == 'u':
+            if self.pos[0] == [150,90]:
+                self.pos[0] = [200,90]
+            if self.pos[1] == [400,190]:
+                self.pos[1] = [300,190]
+            if self.pos[2] == [50, 190]:
+                self.pos[2] = [350, 190]
+            if self.pos[0] == [200,90]:
+                self.pos[0] = [200,140]
+            if self.pos[1] == [300,190]:
+                self.pos[1] = [200,190]
+            if self.pos[2] == [350,190]:
+                self.pos[2] = [250,190]
+
+cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
+cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
+cubicle2 = Cube([[200,140],[200,190],[250,190]],[0,2,3])
+cubicle3 = Cube([[150,140],[100,190],[150,190]],[0,1,2])
+cubicle4 = Cube([[100,240],[150,240],[150,290]],[1,2,5])
+cubicle5 = Cube([[200,290],[200,240],[250,240]],[5,2,3])
+cubicle6 = Cube([[200,340],[300,240],[350,240]],[5,3,4])
+cubicle7 = Cube([[50, 240],[400,240],[150,340]],[1,4,5])
+
+
 # Schleife Hauptprogramm
+move = 'none'
 while spielaktiv:
     randomnr = randint(0,5)
     color = colors[randomnr]
@@ -71,17 +107,8 @@ while spielaktiv:
         pygame.draw.rect(screen, SCHWARZ, [150, 290, 50, 50],1)
         pygame.draw.rect(screen, SCHWARZ, [150, 340, 50, 50],1)
         pygame.draw.rect(screen, SCHWARZ, [200, 290, 50, 50],1)            
-        pygame.draw.rect(screen, SCHWARZ, [200, 340, 50, 50],1)
-
-    class Cube:
-        def __init__(self, pos, colors):
-            self.pos = pos
-            self.colors = colors
-
-        def startup(self):
-            pygame.draw.rect(screen, colors[self.colors[0]], [self.pos[0][0], self.pos[0][1], 50, 50])
-            pygame.draw.rect(screen, colors[self.colors[1]], [self.pos[1][0], self.pos[1][1], 50, 50])
-            pygame.draw.rect(screen, colors[self.colors[2]], [self.pos[2][0], self.pos[2][1], 50, 50])
+        pygame.draw.rect(screen, SCHWARZ, [200, 340, 50, 50],1)              
+    
 
     # Überprüfen, ob Nutzer eine Aktion durchgeführt hat
     for event in pygame.event.get():
@@ -107,17 +134,22 @@ while spielaktiv:
                 playerColor = color
             elif event.key == pygame.K_u:
                 print('Spieler bewegt U')
+                move = 'u'
             elif event.key == pygame.K_w:
                 print("pressed 'w'")
+                move = 'w'
                 origin_Y = origin_Y -10
             elif event.key == pygame.K_a:
                 print("pressed 'a'")
+                move = 'a'
                 origin_X = origin_X - 10
             elif event.key == pygame.K_s:
                 print("pressed 's'")
+                move = 's'
                 origin_Y = origin_Y +10
             elif event.key == pygame.K_d:
                 print("pressed 'd'")
+                move = 'd'
                 origin_X = origin_X + 10
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -134,23 +166,25 @@ while spielaktiv:
     player()
     
     pieces = [[0,4,1],[0,3,4],[0,2,3],[0,1,2],[5,1,2],[5,2,3],[5,3,4],[5,4,1]]
-    cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
-    cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
-    cubicle2 = Cube([[200,140],[200,190],[250,190]],[0,2,3])
-    cubicle3 = Cube([[150,140],[100,190],[150,190]],[0,1,2])
-    cubicle4 = Cube([[100,240],[150,240],[150,290]],[1,2,5])
-    cubicle5 = Cube([[200,290],[200,240],[250,240]],[5,2,3])
-    cubicle6 = Cube([[200,340],[300,240],[350,240]],[5,3,4])
-    cubicle7 = Cube([[50, 240],[400,240],[150,340]],[1,4,5])
 
-    cubicle0.startup()
-    cubicle1.startup()
-    cubicle2.startup()
-    cubicle3.startup()
-    cubicle4.startup()
-    cubicle5.startup()
-    cubicle6.startup()
-    cubicle7.startup()
+    cubicle0.move()
+    cubicle1.move()
+    cubicle2.move()
+    cubicle3.move()
+    cubicle4.move()
+    cubicle5.move()
+    cubicle6.move()
+    cubicle7.move()
+
+    cubicle0.display()
+    cubicle1.display()
+    cubicle2.display()
+    cubicle3.display()
+    cubicle4.display()
+    cubicle5.display()
+    cubicle6.display()
+    cubicle7.display()
+
     outline()
     # Fenster aktualisieren
     pygame.display.flip()
