@@ -82,57 +82,46 @@ while spielaktiv:
             pygame.draw.rect(screen, colors[self.colors[0]], [self.pos[0][0], self.pos[0][1], 50, 50])
             pygame.draw.rect(screen, colors[self.colors[1]], [self.pos[1][0], self.pos[1][1], 50, 50])
             pygame.draw.rect(screen, colors[self.colors[2]], [self.pos[2][0], self.pos[2][1], 50, 50])
-        
-    def move(posX, posY,  rota):
-        if posX == 50:
-            if posY == 190:
-                if rota == 'U':
-                    print('success')
-
 
     # Überprüfen, ob Nutzer eine Aktion durchgeführt hat
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             spielaktiv = False
-            print("Spieler hat Quit-Button angeklickt")
+            print("pressed 'QUIT'")
         elif event.type == pygame.KEYDOWN:
             # Taste für Spieler 1
             if event.key == pygame.K_RIGHT:
-                print("Spieler hat Pfeiltaste rechts gedrückt")
+                print("pressed 'arrowright'")
                 origin_X = origin_X + 10
             elif event.key == pygame.K_LEFT:
-                print("Spieler hat Pfeiltaste links gedrückt")
+                print("pressed 'arrowleft'")
                 origin_X = origin_X - 10
             elif event.key == pygame.K_UP:
-                print("Spieler hat Pfeiltaste hoch gedrückt")
+                print("pressed 'arrowup'")
                 origin_Y = origin_Y -10
             elif event.key == pygame.K_DOWN:
-                print("Spieler hat Pfeiltaste runter gedrückt")
+                print("pressed 'arrowdown'")
                 origin_Y = origin_Y +10
             elif event.key == pygame.K_SPACE:
-                print("Spieler hat Leertaste gedrückt")
+                print("pressed ' '")
                 playerColor = color
             elif event.key == pygame.K_u:
                 print('Spieler bewegt U')
-                move(50, 190, 'U')
-
-
-            # Taste für Spieler 2
             elif event.key == pygame.K_w:
-                print("Spieler hat Taste w gedrückt")
+                print("pressed 'w'")
                 origin_Y = origin_Y -10
             elif event.key == pygame.K_a:
-                print("Spieler hat Taste a gedrückt")
+                print("pressed 'a'")
                 origin_X = origin_X - 10
             elif event.key == pygame.K_s:
-                print("Spieler hat Taste s gedrückt")
+                print("pressed 's'")
                 origin_Y = origin_Y +10
             elif event.key == pygame.K_d:
-                print("Spieler hat Taste d gedrückt")
+                print("pressed 'd'")
                 origin_X = origin_X + 10
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            print("Spieler hast Maus angeklickt")
+            print("clicked mouse")
             playerColor = color
 
     # Spiellogik hier integrieren
@@ -144,7 +133,6 @@ while spielaktiv:
         pygame.draw.rect(screen, SCHWARZ, [origin_X, origin_Y, 50, 50],1)
     player()
     
-    Cube
     pieces = [[0,4,1],[0,3,4],[0,2,3],[0,1,2],[5,1,2],[5,2,3],[5,3,4],[5,4,1]]
     cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
     cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
