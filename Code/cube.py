@@ -19,7 +19,7 @@ BLAU    = (0,0,255)
 screen = pygame.display.set_mode((640, 480))
 
 # Titel für Fensterkopf
-pygame.display.set_caption("Unser erstes Pygame-Spiel")
+pygame.display.set_caption("2x2 Cube Sim")
 
 # solange die Variable True ist, soll das Spiel laufen
 spielaktiv = True
@@ -76,18 +76,68 @@ class Cube:
                 self.pos[0] = [200,290]
                 self.pos[1] = [200,240]
                 self.pos[2] = [250,240]
+            elif self.pos[1] == [150,290]:
+                self.pos[1] = [200,290]
+                self.pos[2] = [200,240]
+                self.pos[0] = [250,240]
+            elif self.pos[2] == [150,290]:
+                self.pos[2] = [200,290]
+                self.pos[1] = [200,240]
+                self.pos[0] = [250,240]
             elif self.pos[0] == [200,290]:
                 self.pos[0] = [200,340]
                 self.pos[1] = [300,240]
                 self.pos[2] = [350,240]
+            elif self.pos[1] == [200,290]:
+                self.pos[1] = [200,340]
+                self.pos[2] = [300,240]
+                self.pos[0] = [350,240]
+            elif self.pos[2] == [200,290]:
+                self.pos[2] = [200,340]
+                self.pos[1] = [300,240]
+                self.pos[0] = [350,240]
             elif self.pos[0] == [200,340]:
                 self.pos[0] = [150,340]
                 self.pos[1] = [400,240]
                 self.pos[2] = [50, 240]
+            elif self.pos[1] == [200,340]:
+                self.pos[1] = [150,340]
+                self.pos[0] = [400,240]
+                self.pos[2] = [50, 240]
+            elif self.pos[2] == [200,340]:
+                self.pos[2] = [150,340]
+                self.pos[1] = [400,240]
+                self.pos[0] = [50, 240]
             elif self.pos[0] == [150,340]:
                 self.pos[0] = [150,290]
                 self.pos[1] = [100,240]
                 self.pos[2] = [150,240]
+            elif self.pos[1] == [150,340]:
+                self.pos[1] = [150,290]
+                self.pos[0] = [100,240]
+                self.pos[2] = [150,240]
+            elif self.pos[2] == [150,340]:
+                self.pos[2] = [150,290]
+                self.pos[1] = [100,240]
+                self.pos[0] = [150,240]
+        if move == 'f':
+            if self.pos[1]== [200,190]:
+                self.pos[1] = [200,240]
+                self.pos[2] = [200,290]
+                self.pos[0] = [250,240]
+            elif self.pos[1] == [200,240]:
+                self.pos[1] = [150,240]
+                self.pos[2] = [150,290]
+                self.pos[0] = [100,240]
+            elif self.pos[2] == [150,240]:
+                self.pos[2] = [150,190]
+                self.pos[1] = [150,140]
+                self.pos[0] = [100,190]
+            elif self.pos[2] == [150,190]:
+                self.pos[2] = [200,190]
+                self.pos[1] = [200,140]
+                self.pos[0] = [250,190]
+
 
 cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
 cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
@@ -156,9 +206,9 @@ while spielaktiv:
             elif event.key == pygame.K_u:
                 print("pressed 'u'")
                 move = 'u'
-            elif event.key == pygame.K_w:
-                print("pressed 'w'")
-                move = 'w'
+            elif event.key == pygame.K_f:
+                print("pressed 'f'")
+                move = 'f'
                 origin_Y = origin_Y -10
             elif event.key == pygame.K_a:
                 print("pressed 'a'")
