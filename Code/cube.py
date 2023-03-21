@@ -71,16 +71,32 @@ class Cube:
                 self.pos[0] = [150, 90]
                 self.pos[1] = [400,190]
                 self.pos[2] = [50, 190]
-            self.display()
+        if move == 'd':
+            if self.pos[0] == [150,290]:
+                self.pos[0] = [200,290]
+                self.pos[1] = [200,240]
+                self.pos[2] = [250,240]
+            elif self.pos[0] == [200,290]:
+                self.pos[0] = [200,340]
+                self.pos[1] = [300,240]
+                self.pos[2] = [350,240]
+            elif self.pos[0] == [200,340]:
+                self.pos[0] = [150,340]
+                self.pos[1] = [400,240]
+                self.pos[2] = [50, 240]
+            elif self.pos[0] == [150,340]:
+                self.pos[0] = [150,290]
+                self.pos[1] = [100,240]
+                self.pos[2] = [150,240]
 
 cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
 cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
 cubicle2 = Cube([[200,140],[200,190],[250,190]],[0,2,3])
 cubicle3 = Cube([[150,140],[100,190],[150,190]],[0,1,2])
-cubicle4 = Cube([[100,240],[150,240],[150,290]],[1,2,5])
+cubicle4 = Cube([[150,290],[100,240],[150,240]],[5,1,2])
 cubicle5 = Cube([[200,290],[200,240],[250,240]],[5,2,3])
 cubicle6 = Cube([[200,340],[300,240],[350,240]],[5,3,4])
-cubicle7 = Cube([[50, 240],[400,240],[150,340]],[1,4,5])
+cubicle7 = Cube([[150,340],[400,240],[50, 240]],[5,4,1])
 
 
 # Schleife Hauptprogramm
@@ -138,7 +154,7 @@ while spielaktiv:
                 print("pressed ' '")
                 playerColor = color
             elif event.key == pygame.K_u:
-                print('Spieler bewegt U')
+                print("pressed 'u'")
                 move = 'u'
             elif event.key == pygame.K_w:
                 print("pressed 'w'")
