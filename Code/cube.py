@@ -47,85 +47,31 @@ pos       = [[[150, 90],[400,190],[50, 190]],
 while spielaktiv:
     randomnr = randint(0,5)
     color = colors[randomnr]
-
-    def rCube():
-        def outline():
-            pygame.draw.rect(screen, SCHWARZ, [150, 90, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [200, 90, 50, 50],1)  
-            pygame.draw.rect(screen, SCHWARZ, [200, 140, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [150, 140, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [50, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [50, 240, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [100, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [100, 240, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [150, 190, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [150, 240, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [200, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [200, 240, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [250, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [250, 240, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [300, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [300, 240, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [350, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [350, 240, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [400, 190, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [400, 240, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [150, 290, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [150, 340, 50, 50],1)
-            pygame.draw.rect(screen, SCHWARZ, [200, 290, 50, 50],1)            
-            pygame.draw.rect(screen, SCHWARZ, [200, 340, 50, 50],1)
-        
-        def piece0():
-            pygame.draw.rect(screen, colors[0], [pos[0][0][0], pos[0][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[4], [pos[0][1][0], pos[0][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[1], [pos[0][2][0], pos[0][2][1], 50, 50])
-
-        def piece1():
-            pygame.draw.rect(screen, colors[0], [pos[1][0][0], pos[1][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[3], [pos[1][1][0], pos[1][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[4], [pos[1][2][0], pos[1][2][1], 50, 50])
-
-        def piece2():
-            pygame.draw.rect(screen, colors[0], [pos[2][0][0], pos[2][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[2], [pos[2][1][0], pos[2][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[3], [pos[2][2][0], pos[2][2][1], 50, 50])
-
-        def piece3():
-            pygame.draw.rect(screen, colors[0], [pos[3][0][0], pos[3][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[1], [pos[3][1][0], pos[3][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[2], [pos[3][2][0], pos[3][2][1], 50, 50])
-
-        def piece4():
-            pygame.draw.rect(screen, colors[1], [pos[4][0][0], pos[4][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[2], [pos[4][1][0], pos[4][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[5], [pos[4][2][0], pos[4][2][1], 50, 50])
-
-        def piece5():
-            pygame.draw.rect(screen, colors[5], [pos[5][0][0], pos[5][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[2], [pos[5][1][0], pos[5][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[3], [pos[5][2][0], pos[5][2][1], 50, 50])
-            
-        def piece6():
-            pygame.draw.rect(screen, colors[5], [pos[6][0][0], pos[6][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[3], [pos[6][1][0], pos[6][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[4], [pos[6][2][0], pos[6][2][1], 50, 50])
-           
-        def piece7():
-            pygame.draw.rect(screen, colors[1], [pos[7][0][0], pos[7][0][1], 50, 50])
-            pygame.draw.rect(screen, colors[4], [pos[7][1][0], pos[7][1][1], 50, 50])
-            pygame.draw.rect(screen, colors[5], [pos[7][2][0], pos[7][2][1], 50, 50])
-
-        
-        
-        #piece0()
-        #piece1()
-        #piece2()
-        #piece3()
-        #piece4()
-        #piece5()
-        #piece6()
-        #piece7()
-        outline()
+    def outline():
+        pygame.draw.rect(screen, SCHWARZ, [150, 90, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [200, 90, 50, 50],1)  
+        pygame.draw.rect(screen, SCHWARZ, [200, 140, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [150, 140, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [50, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [50, 240, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [100, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [100, 240, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [150, 190, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [150, 240, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [200, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [200, 240, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [250, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [250, 240, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [300, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [300, 240, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [350, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [350, 240, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [400, 190, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [400, 240, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [150, 290, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [150, 340, 50, 50],1)
+        pygame.draw.rect(screen, SCHWARZ, [200, 290, 50, 50],1)            
+        pygame.draw.rect(screen, SCHWARZ, [200, 340, 50, 50],1)
 
     class Cube:
         def __init__(self, pos, colors):
@@ -217,7 +163,7 @@ while spielaktiv:
     cubicle5.startup()
     cubicle6.startup()
     cubicle7.startup()
-    rCube()
+    outline()
     # Fenster aktualisieren
     pygame.display.flip()
 
