@@ -55,18 +55,23 @@ class Cube:
     
     def move(self):
         if move == 'u':
-            if self.pos[0] == [150,90]:
-                self.pos[0] = [200,90]
-            if self.pos[1] == [400,190]:
+            if self.pos[0] == [150, 90]:
+                self.pos[0] = [200, 90]
                 self.pos[1] = [300,190]
-            if self.pos[2] == [50, 190]:
-                self.pos[2] = [350, 190]
-            if self.pos[0] == [200,90]:
+                self.pos[2] = [350,190]
+            elif self.pos[0] == [200, 90]:
                 self.pos[0] = [200,140]
-            if self.pos[1] == [300,190]:
                 self.pos[1] = [200,190]
-            if self.pos[2] == [350,190]:
                 self.pos[2] = [250,190]
+            elif self.pos[0] == [200,140]:
+                self.pos[0] = [150,140]
+                self.pos[1] = [100,190]
+                self.pos[2] = [150,190]
+            elif self.pos[0] == [150,140]:
+                self.pos[0] = [150, 90]
+                self.pos[1] = [400,190]
+                self.pos[2] = [50, 190]
+            self.display()
 
 cubicle0 = Cube([[150, 90],[400,190],[50, 190]],[0,4,1])
 cubicle1 = Cube([[200, 90],[300,190],[350,190]],[0,3,4])
@@ -175,6 +180,7 @@ while spielaktiv:
     cubicle5.move()
     cubicle6.move()
     cubicle7.move()
+    move = 'none'
 
     cubicle0.display()
     cubicle1.display()
