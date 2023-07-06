@@ -13,7 +13,6 @@ GELB    = (255,255,0)
 BLAU    = (0,0,255)
 CLR = (0, 255,255)
 WINDOW_SIZE =  600
-ROTATE_SPEED = 0.05
 
 # Variables
 scale = 100
@@ -22,22 +21,26 @@ clock = pygame.time.Clock()
 center = [(WINDOW_SIZE/2),(WINDOW_SIZE/2)]
 
 # Centerpoints
-xp = np.array([ 1,0,0])
-xn = np.array([-1,0,0])
-yp = np.array([0, 1,0])
-yn = np.array([0,-1,0])
-zp = np.array([0,0, 1])
-zn = np.array([0,0,-1])
+xp = np.array([ 1.0,0.0,0.0])
+xn = np.array([-1.0,0.0,0.0])
+yp = np.array([0.0, 1.0,0.0])
+yn = np.array([0.0,-1.0,0.0])
+zp = np.array([0.0,0.0, 1.0])
+zn = np.array([0.0,0.0,-1.0])
 
 # Class Cube
 class Cube:
-    def __init__(self,vec, vec1, vec2, vec3, coX, coY, coZ) -> None:
+    def __init__(self,vec, vec1, vec2, vec3, p4,p5,p6, coX, coY, coZ) -> None:
         # Vector from Center to Corner
         self.vec = vec 
         # Vectors from Corners to Edges
         self.vecx = vec1 + vec
         self.vecy = vec2 + vec
         self.vecz = vec3 + vec
+        # Vectors from Center to Middle
+        self.p4 = p4
+        self.p5 = p5
+        self.p6 = p6
         # Colors for X, Y and Z
         self.coX = coX
         self.coY = coY
@@ -60,6 +63,15 @@ class Cube:
             zx = self.vecz[0]
             zy = self.vecz[1]
             zz = self.vecz[2]
+            p4x = self.p4[0]
+            p4y = self.p4[1]
+            p4z = self.p4[2]
+            p5x = self.p5[0]
+            p5y = self.p5[1]
+            p5z = self.p5[2]
+            p6x = self.p6[0]
+            p6y = self.p6[1]
+            p6z = self.p6[2]
             if axis == 'x':
                 self.vec[1] = y * c - z * s
                 self.vec[2] = y * s + z * c
@@ -69,6 +81,12 @@ class Cube:
                 self.vecy[2] = yy * s + yz * c
                 self.vecz[1] = zy * c - zz * s
                 self.vecz[2] = zy * s + zz * c
+                self.p4[1] = p4y * c - p4z * s
+                self.p4[2] = p4y * s + p4z * c
+                self.p5[1] = p5y * c - p5z * s
+                self.p5[2] = p5y * s + p5z * c
+                self.p6[1] = p6y * c - p6z * s
+                self.p6[2] = p6y * s + p6z * c
             elif axis == 'y':
                 self.vec[0] = x * c + z * s
                 self.vec[2] = -x * s + z * c
@@ -78,6 +96,12 @@ class Cube:
                 self.vecy[2] = -yx * s + yz * c
                 self.vecz[0] = zx * c + zz * s
                 self.vecz[2] = -zx * s + zz * c
+                self.p4[0] = p4x * c + p4z * s
+                self.p4[2] = -p4x * s + p4z * c
+                self.p5[0] = p5x * c + p5z * s
+                self.p5[2] = -p5x * s + p5z * c
+                self.p6[0] = p6x * c + p6z * s
+                self.p6[2] = -p6x * s + p6z * c
 
     # Drawing points
     def drawpoint(self):
@@ -85,6 +109,9 @@ class Cube:
         pygame.draw.circle(window, (255,255,0), (self.vecx[0]*100+300, self.vecx[1]*100+300),5)
         pygame.draw.circle(window, (255,255,0), (self.vecy[0]*100+300, self.vecy[1]*100+300),5)
         pygame.draw.circle(window, (255,255,0), (self.vecz[0]*100+300, self.vecz[1]*100+300),5)
+        pygame.draw.circle(window, (255,0,255), (self.p4[0]*100+300, self.p4[1]*100+300),5)
+        pygame.draw.circle(window, (255,0,255), (self.p5[0]*100+300, self.p5[1]*100+300),5)
+        pygame.draw.circle(window, (255,0,255), (self.p6[0]*100+300, self.p6[1]*100+300),5)
         
     # Drawing lines
     def connectpt(self, x2,y2):
@@ -100,25 +127,24 @@ class Cube:
 
     #Color fill algorithm
     def fill(self):
-        pass
-
+        pygame.draw.polygon(window, self.coX, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300),(self.p6[0]*100+300, self.p6[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300)])
+        pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
+        pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
 
 # Setup the 8 Cubes
-cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), ORANGE, GELB, GRUEN)
-cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), ROT, GELB, GRUEN)
-cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), ROT, WEISS, GRUEN)
-cube4 = Cube(np.array([-1.0, 1.0, 1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), ORANGE, WEISS, GRUEN)
-cube5 = Cube(np.array([-1.0,-1.0,-1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), ORANGE, GELB, BLAU)
-cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), ROT, GELB, BLAU)
-cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), ROT, WEISS, BLAU)
-cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), ORANGE, WEISS, BLAU)
-
+cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS)
+cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yn), np.copy(zp),BLAU, ROT, WEISS)
+cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yp), np.copy(zp),BLAU, ROT, GELB)
+cube4 = Cube(np.array([-1.0, 1.0, 1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yp), np.copy(zp),BLAU, ORANGE, GELB)
+cube5 = Cube(np.array([-1.0,-1.0,-1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), np.copy(xn), np.copy(yn), np.copy(zn),GRUEN, ORANGE, WEISS)
+cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), np.copy(xp), np.copy(yn), np.copy(zn),GRUEN, ROT, WEISS)
+cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xp), np.copy(yp), np.copy(zn),GRUEN, ROT, GELB)
+cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xn), np.copy(yp), np.copy(zn),GRUEN, ORANGE, GELB)
 
 
 # Main Loop
-angle_x = angle_y = angle_z = 0
 running = True
-agl = 1
+agl = 5
 while running == True:
     # Set Timer
     clock.tick(60)
@@ -128,14 +154,12 @@ while running == True:
     pygame.draw.circle(window, (255, 0, 0), (WINDOW_SIZE/2, WINDOW_SIZE/2), 5)
 
     # Draw all the points and lines
-    cube1.drawpoint()
-    cube2.drawpoint()
-    cube3.drawpoint()
-    cube4.drawpoint()
-    cube5.drawpoint()
-    cube6.drawpoint()
-    cube7.drawpoint()
-    cube8.drawpoint()
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.drawpoint()
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.fill()
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
     cube1.connectpt(cube4.vec[0], cube4.vec[1])
     cube1.connectpt(cube5.vec[0], cube5.vec[1])
@@ -148,62 +172,37 @@ while running == True:
     cube5.connectpt(cube8.vec[0], cube8.vec[1])
     cube7.connectpt(cube6.vec[0], cube6.vec[1])
     cube7.connectpt(cube8.vec[0], cube8.vec[1])
-
+    
     # Key Inputs
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                angle_y -= ROTATE_SPEED
-                cube1.rotate(-agl, 'y')
-                cube2.rotate(-agl, 'y')
-                cube3.rotate(-agl, 'y')
-                cube4.rotate(-agl, 'y')
-                cube5.rotate(-agl, 'y')
-                cube6.rotate(-agl, 'y')
-                cube7.rotate(-agl, 'y')
-                cube8.rotate(-agl, 'y')
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.rotate(-agl, 'y')
             elif event.key == pygame.K_LEFT:
-                angle_y += ROTATE_SPEED
-                cube1.rotate(agl, 'y')
-                cube2.rotate(agl, 'y')
-                cube3.rotate(agl, 'y')
-                cube4.rotate(agl, 'y')
-                cube5.rotate(agl, 'y')
-                cube6.rotate(agl, 'y')
-                cube7.rotate(agl, 'y')
-                cube8.rotate(agl, 'y')
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.rotate(agl, 'y')
             elif event.key ==pygame.K_UP:
-                angle_x += ROTATE_SPEED
-                cube1.rotate(-agl, 'x')
-                cube2.rotate(-agl, 'x')
-                cube3.rotate(-agl, 'x')
-                cube4.rotate(-agl, 'x')
-                cube5.rotate(-agl, 'x')
-                cube6.rotate(-agl, 'x')
-                cube7.rotate(-agl, 'x')
-                cube8.rotate(-agl, 'x')
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.rotate(-agl, 'x')
             elif event.key == pygame.K_DOWN:
-                angle_x -= ROTATE_SPEED
-                cube1.rotate(agl, 'x')
-                cube2.rotate(agl, 'x')
-                cube3.rotate(agl, 'x')
-                cube4.rotate(agl, 'x')
-                cube5.rotate(agl, 'x')
-                cube6.rotate(agl, 'x')
-                cube7.rotate(agl, 'x')
-                cube8.rotate(agl, 'x')
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.rotate(agl, 'x')
             elif event.key == pygame.K_0:
-                angle_y = angle_x = angle_z = 0
-                cube1.setzero(np.array([-1,-1, 1]))
-                cube2.setzero(np.array([ 1,-1, 1]))
-                cube3.setzero(np.array([ 1, 1, 1]))
-                cube4.setzero(np.array([-1, 1, 1]))
-                cube5.setzero(np.array([-1,-1,-1]))
-                cube6.setzero(np.array([ 1,-1,-1]))
-                cube7.setzero(np.array([ 1, 1,-1]))
-                cube8.setzero(np.array([-1, 1,-1]))
+                cube1.setzero(np.array([-1.0,-1.0, 1.0]))
+                cube2.setzero(np.array([ 1.0,-1.0, 1.0]))
+                cube3.setzero(np.array([ 1.0, 1.0, 1.0]))
+                cube4.setzero(np.array([-1.0, 1.0, 1.0]))
+                cube5.setzero(np.array([-1.0,-1.0,-1.0]))
+                cube6.setzero(np.array([ 1.0,-1.0,-1.0]))
+                cube7.setzero(np.array([ 1.0, 1.0,-1.0]))
+                cube8.setzero(np.array([-1.0, 1.0,-1.0]))
             elif event.key == pygame.K_ESCAPE:
                 running = False   
     pygame.display.update()
