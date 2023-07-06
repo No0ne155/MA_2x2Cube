@@ -131,6 +131,31 @@ class Cube:
         pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
         pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
 
+    def turn(self, turn):
+        if turn == 'r':
+            if self.vec[0] >0:
+                print('turn r')
+                u = np.array([2.0, 0.0, 0.0])
+                theta = np.radians(90)
+                u_norm = u/np.linalg.norm(u)
+                # Rotationsmatrix
+                rotation_matrix = np.array([[np.cos(theta) + u_norm[0]**2 * (1 - np.cos(theta)),
+                             u_norm[0] * u_norm[1] * (1 - np.cos(theta)) - u_norm[2] * np.sin(theta),
+                             u_norm[0] * u_norm[2] * (1 - np.cos(theta)) + u_norm[1] * np.sin(theta)],
+                            [u_norm[1] * u_norm[0] * (1 - np.cos(theta)) + u_norm[2] * np.sin(theta),
+                             np.cos(theta) + u_norm[1]**2 * (1 - np.cos(theta)),
+                             u_norm[1] * u_norm[2] * (1 - np.cos(theta)) - u_norm[0] * np.sin(theta)],
+                            [u_norm[2] * u_norm[0] * (1 - np.cos(theta)) - u_norm[1] * np.sin(theta),
+                             u_norm[2] * u_norm[1] * (1 - np.cos(theta)) + u_norm[0] * np.sin(theta),
+                             np.cos(theta) + u_norm[2]**2 * (1 - np.cos(theta))]])
+                self.vec = np.dot(rotation_matrix, self.vec)
+                self.vecx = np.dot(rotation_matrix, self.vecx)
+                self.vecy = np.dot(rotation_matrix, self.vecy)
+                self.vecz = np.dot(rotation_matrix, self.vecz)
+                self.p4 = np.dot(rotation_matrix, self.p4)
+                self.p5 = np.dot(rotation_matrix, self.p5)
+                self.p6 = np.dot(rotation_matrix, self.p6)
+
 # Setup the 8 Cubes
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS)
 cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yn), np.copy(zp),BLAU, ROT, WEISS)
@@ -160,6 +185,7 @@ while running == True:
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.fill()
+    '''
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
     cube1.connectpt(cube4.vec[0], cube4.vec[1])
     cube1.connectpt(cube5.vec[0], cube5.vec[1])
@@ -171,7 +197,7 @@ while running == True:
     cube5.connectpt(cube6.vec[0], cube6.vec[1])
     cube5.connectpt(cube8.vec[0], cube8.vec[1])
     cube7.connectpt(cube6.vec[0], cube6.vec[1])
-    cube7.connectpt(cube8.vec[0], cube8.vec[1])
+    cube7.connectpt(cube8.vec[0], cube8.vec[1])'''
     
     # Key Inputs
     for event in pygame.event.get():
@@ -205,4 +231,8 @@ while running == True:
                 cube8.setzero(np.array([-1.0, 1.0,-1.0]))
             elif event.key == pygame.K_ESCAPE:
                 running = False   
+            elif event.key == pygame.K_r:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn('r')
     pygame.display.update()
