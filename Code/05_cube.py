@@ -1,6 +1,9 @@
+# Imports
 import pygame
 from math import*
 import numpy as np
+
+#colors
 ORANGE  = ( 255, 140, 0)
 ROT     = ( 255, 0, 0)
 GRUEN   = ( 0, 255, 0)
@@ -26,11 +29,14 @@ zp = np.array([0,0, 1])
 zn = np.array([0,0,-1])
 
 class Cube:
-    def __init__(self,vec, vec1, vec2, vec3) -> None:
+    def __init__(self,vec, vec1, vec2, vec3, coX, coY, coZ) -> None:
         self.vec = vec
         self.vecx = vec1 + vec
         self.vecy = vec2 + vec
         self.vecz = vec3 + vec
+        self.coX = coX
+        self.coY = coY
+        self.coZ = coZ
 
     def rotate(self, angle, axis):
             rad = angle * pi / 180.0
@@ -73,7 +79,6 @@ class Cube:
         pygame.draw.circle(window, (255,255,0), (self.vecx[0]*100+300, self.vecx[1]*100+300),5)
         pygame.draw.circle(window, (255,255,0), (self.vecy[0]*100+300, self.vecy[1]*100+300),5)
         pygame.draw.circle(window, (255,255,0), (self.vecz[0]*100+300, self.vecz[1]*100+300),5)
-        #print(x,y)
         
 
     def connectpt(self, x2,y2):
@@ -86,28 +91,26 @@ class Cube:
     def setzero(self,vec):
         self.vec = vec
 
-    def addvec(self, vec1):
-        self.vecx = vec1 + self.vec
-        print(self.vecx)
-        pygame.draw.circle(window, (255, 0, 0), (self.vecx[0]*100+300, self.vecx[1]*100+30), 5)
-        #self.vecy = vec2 + self.vec
-        #self.vecz = vec3 + self.vec
+    def fill(self):
+        pass
+
 
     
-cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]))
-cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]))
-cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]))
-cube4 = Cube(np.array([-1.0, 1.0, 1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]))
-cube5 = Cube(np.array([-1.0,-1.0,-1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]))
-cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]))
-cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]))
-cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]))
+cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), ORANGE, GELB, GRUEN)
+cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), ROT, GELB, GRUEN)
+cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), ROT, WEISS, GRUEN)
+cube4 = Cube(np.array([-1.0, 1.0, 1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), ORANGE, WEISS, GRUEN)
+cube5 = Cube(np.array([-1.0,-1.0,-1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), ORANGE, GELB, BLAU)
+cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0, 1]), ROT, GELB, BLAU)
+cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), ROT, WEISS, BLAU)
+cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), ORANGE, WEISS, BLAU)
 
 
 
 # Main Loop
 angle_x = angle_y = angle_z = 0
 running = True
+agl = 1
 while running == True:
     clock.tick(60)
     window.fill((0,0,0))
@@ -142,44 +145,44 @@ while running == True:
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
                 angle_y -= ROTATE_SPEED
-                cube1.rotate(-9, 'y')
-                cube2.rotate(-9, 'y')
-                cube3.rotate(-9, 'y')
-                cube4.rotate(-9, 'y')
-                cube5.rotate(-9, 'y')
-                cube6.rotate(-9, 'y')
-                cube7.rotate(-9, 'y')
-                cube8.rotate(-9, 'y')
+                cube1.rotate(-agl, 'y')
+                cube2.rotate(-agl, 'y')
+                cube3.rotate(-agl, 'y')
+                cube4.rotate(-agl, 'y')
+                cube5.rotate(-agl, 'y')
+                cube6.rotate(-agl, 'y')
+                cube7.rotate(-agl, 'y')
+                cube8.rotate(-agl, 'y')
             elif event.key == pygame.K_LEFT:
                 angle_y += ROTATE_SPEED
-                cube1.rotate(9, 'y')
-                cube2.rotate(9, 'y')
-                cube3.rotate(9, 'y')
-                cube4.rotate(9, 'y')
-                cube5.rotate(9, 'y')
-                cube6.rotate(9, 'y')
-                cube7.rotate(9, 'y')
-                cube8.rotate(9, 'y')
+                cube1.rotate(agl, 'y')
+                cube2.rotate(agl, 'y')
+                cube3.rotate(agl, 'y')
+                cube4.rotate(agl, 'y')
+                cube5.rotate(agl, 'y')
+                cube6.rotate(agl, 'y')
+                cube7.rotate(agl, 'y')
+                cube8.rotate(agl, 'y')
             elif event.key ==pygame.K_UP:
                 angle_x += ROTATE_SPEED
-                cube1.rotate(-9, 'x')
-                cube2.rotate(-9, 'x')
-                cube3.rotate(-9, 'x')
-                cube4.rotate(-9, 'x')
-                cube5.rotate(-9, 'x')
-                cube6.rotate(-9, 'x')
-                cube7.rotate(-9, 'x')
-                cube8.rotate(-9, 'x')
+                cube1.rotate(-agl, 'x')
+                cube2.rotate(-agl, 'x')
+                cube3.rotate(-agl, 'x')
+                cube4.rotate(-agl, 'x')
+                cube5.rotate(-agl, 'x')
+                cube6.rotate(-agl, 'x')
+                cube7.rotate(-agl, 'x')
+                cube8.rotate(-agl, 'x')
             elif event.key == pygame.K_DOWN:
                 angle_x -= ROTATE_SPEED
-                cube1.rotate(9, 'x')
-                cube2.rotate(9, 'x')
-                cube3.rotate(9, 'x')
-                cube4.rotate(9, 'x')
-                cube5.rotate(9, 'x')
-                cube6.rotate(9, 'x')
-                cube7.rotate(9, 'x')
-                cube8.rotate(9, 'x')
+                cube1.rotate(agl, 'x')
+                cube2.rotate(agl, 'x')
+                cube3.rotate(agl, 'x')
+                cube4.rotate(agl, 'x')
+                cube5.rotate(agl, 'x')
+                cube6.rotate(agl, 'x')
+                cube7.rotate(agl, 'x')
+                cube8.rotate(agl, 'x')
             elif event.key == pygame.K_0:
                 angle_y = angle_x = angle_z = 0
                 cube1.setzero(np.array([-1,-1, 1]))
