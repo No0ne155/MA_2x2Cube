@@ -127,10 +127,10 @@ class Cube:
 
     #Color fill algorithm
     def fill(self):
-        pygame.draw.polygon(window, self.coX, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300),(self.p6[0]*100+300, self.p6[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300)])
-        pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
         pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
-
+        pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
+        pygame.draw.polygon(window, self.coX, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300),(self.p6[0]*100+300, self.p6[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300)])
+            
     def turn(self, turn):
         if turn == 'r':
             if self.vec[0] >0:
@@ -148,6 +148,8 @@ class Cube:
                             [u_norm[2] * u_norm[0] * (1 - np.cos(theta)) - u_norm[1] * np.sin(theta),
                              u_norm[2] * u_norm[1] * (1 - np.cos(theta)) + u_norm[0] * np.sin(theta),
                              np.cos(theta) + u_norm[2]**2 * (1 - np.cos(theta))]])
+                #np.round(rotation_matrix, 1)
+                print(rotation_matrix)
                 self.vec = np.dot(rotation_matrix, self.vec)
                 self.vecx = np.dot(rotation_matrix, self.vecx)
                 self.vecy = np.dot(rotation_matrix, self.vecy)
@@ -155,6 +157,8 @@ class Cube:
                 self.p4 = np.dot(rotation_matrix, self.p4)
                 self.p5 = np.dot(rotation_matrix, self.p5)
                 self.p6 = np.dot(rotation_matrix, self.p6)
+        
+        
 
 # Setup the 8 Cubes
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS)
@@ -166,6 +170,39 @@ cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]),
 cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xp), np.copy(yp), np.copy(zn),GRUEN, ROT, GELB)
 cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xn), np.copy(yp), np.copy(zn),GRUEN, ORANGE, GELB)
 
+def buffer():
+    sort = []
+    sort.append([cube1.vec[2],1])
+    sort.append([cube2.vec[2],2])
+    sort.append([cube3.vec[2],3])
+    sort.append([cube4.vec[2],4])
+    sort.append([cube5.vec[2],5])
+    sort.append([cube6.vec[2],6])
+    sort.append([cube7.vec[2],7])
+    sort.append([cube8.vec[2],8])
+    
+    sorted_list = sorted(sort, key=lambda x: x[0], reverse=True)
+
+    for i in range(1, 8):
+        cubelet = globals()['cube{}'.format(sorted_list[i][1])]
+        cubelet.fill()
+
+def rot(vec, ax):
+    v_x = vec[0]
+    v_y = vec[1]
+    v_z = vec[2] 
+    c = cos(90)
+    s = sin(90)
+    r = 1-c
+    axe = ax/np.linalg.norm(ax)
+    u_x = axe[0]
+    u_y = axe[1]
+    u_z = axe[2]
+    v_rotated_x = v_x * (c + u_x**2 * r) + v_y * (u_x * u_y * r - u_z * s) + v_z * (u_x * u_z * r + u_y * s)
+    v_rotated_y = v_x * (u_y * u_x * r + u_z * s) + v_y * (c + u_y ** 2 * r) + v_z * (u_y * u_z * r - u_x * s)
+    v_rotated_z = v_x * (u_z * u_x * r - u_y * s) + v_y * (u_z * u_y * r + u_x * s) + v_z * (c + u_z**2 * r)
+    newvec = np.array(v_rotated_x, v_rotated_y, v_rotated_z)
+    return newvec
 
 # Main Loop
 running = True
@@ -182,10 +219,13 @@ while running == True:
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.drawpoint()
+    
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.fill()
-    '''
+    
+
+
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
     cube1.connectpt(cube4.vec[0], cube4.vec[1])
     cube1.connectpt(cube5.vec[0], cube5.vec[1])
@@ -197,7 +237,7 @@ while running == True:
     cube5.connectpt(cube6.vec[0], cube6.vec[1])
     cube5.connectpt(cube8.vec[0], cube8.vec[1])
     cube7.connectpt(cube6.vec[0], cube6.vec[1])
-    cube7.connectpt(cube8.vec[0], cube8.vec[1])'''
+    cube7.connectpt(cube8.vec[0], cube8.vec[1])
     
     # Key Inputs
     for event in pygame.event.get():
