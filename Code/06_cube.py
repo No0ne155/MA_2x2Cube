@@ -163,39 +163,124 @@ class Cube:
     def turn(self, turn):
         if turn == 'r':
             if self.vec[0] >0:
-                ax = self.p4*10
-                self.vec = rot(self.vec,ax)
-                self.vecx = rot(self.vecx,ax)
-                self.vecy = rot(self.vecy,ax)
-                self.vecz = rot(self.vecz,ax)
-                self.p4 = rot(self.p4,ax)
-                self.p5 = rot(self.p5,ax)
-                self.p6 = rot(self.p6,ax)
-                print('r', self.nr)
+                lst = [[self.p4[0], 4],[self.p5[0],5],[self.p6[0],6]]
+                slst = sorted(lst, key=lambda x: x[0], reverse=True)
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
 
         elif turn == 'l':
             if self.vec[0] < 0:
-                ax = self.p4*10
-                self.vec = rot(self.vec,ax)
-                self.vecx = rot(self.vecx,ax)
-                self.vecy = rot(self.vecy,ax)
-                self.vecz = rot(self.vecz,ax)
-                self.p4 = rot(self.p4,ax)
-                self.p5 = rot(self.p5,ax)
-                self.p6 = rot(self.p6,ax)
-                print('l', self.nr)
+                lst = [[self.p4[0], 4],[self.p5[0],5],[self.p6[0],6]]
+                slst = sorted(lst, key=lambda x: x[0])
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
+
         
         elif turn == 'u':
             if self.vec[1] < 0:
-                ax = self.p5*10
-                self.vec = rot(self.vec,ax)
-                self.vecx = rot(self.vecx,ax)
-                self.vecy = rot(self.vecy,ax)
-                self.vecz = rot(self.vecz,ax)
-                self.p4 = rot(self.p4,ax)
-                self.p5 = rot(self.p5,ax)
-                self.p6 = rot(self.p6,ax)
-                print('u', self.nr)
+                lst = [[self.p4[1], 4],[self.p5[1],5],[self.p6[1],6]]
+                slst = sorted(lst, key=lambda x: x[0])
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
+        
+        elif turn == 'd':
+            if self.vec[1] > 0:
+                lst = [[self.p4[1], 4],[self.p5[1],5],[self.p6[1],6]]
+                slst = sorted(lst, key=lambda x: x[0], reverse=True)
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
+        
+        elif turn == 'b':
+            if self.vec[2] > 0:
+                lst = [[self.p4[2], 4],[self.p5[2],5],[self.p6[2],6]]
+                slst = sorted(lst, key=lambda x: x[0], reverse=True)
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
+                
+        elif turn == 'f':
+            if self.vec[2] < 0:
+                lst = [[self.p4[2], 4],[self.p5[2],5],[self.p6[2],6]]
+                slst = sorted(lst, key=lambda x: x[0])
+                lo = slst[0][1]
+                if lo ==4:
+                    ax = self.p4
+                elif lo ==5:
+                    ax = self.p5
+                else:
+                    ax = self.p6
+                agl = -90
+                self.vec = rot(self.vec,ax,agl)
+                self.vecx = rot(self.vecx,ax,agl)
+                self.vecy = rot(self.vecy,ax,agl)
+                self.vecz = rot(self.vecz,ax,agl)
+                self.p4 = rot(self.p4,ax,agl)
+                self.p5 = rot(self.p5,ax,agl)
+                self.p6 = rot(self.p6,ax,agl)
                 
 #Setup the 8 Cubes
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS,1)
@@ -224,12 +309,12 @@ def buffer():
         cubelet = globals()['cube{}'.format(sorted_list[i][1])]
         cubelet.fill()
 
-def rot(vec, ax):
+def rot(vec, ax,agl):
     v_x = vec[0]
     v_y = vec[1]
     v_z = vec[2] 
-    c = cos(np.radians(90))
-    s = sin(np.radians(90))
+    c = cos(np.radians(agl))
+    s = sin(np.radians(agl))
     r = 1-c
     axe = ax/np.linalg.norm(ax)
     u_x = axe[0]
@@ -317,4 +402,18 @@ while running == True:
                 for i in range(1, 9):
                     cubelet = globals()['cube{}'.format(i)]
                     cubelet.turn('u')
+            elif event.key == pygame.K_d:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn('d')
+            elif event.key == pygame.K_f:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn('f')
+            elif event.key == pygame.K_b:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn('b')
     pygame.display.update()
+
+exit()
