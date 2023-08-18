@@ -2,6 +2,7 @@
 import pygame
 from math import*
 import numpy as np
+from random import*
 
 # Colors
 ORANGE  = ( 255, 140, 0)
@@ -19,6 +20,8 @@ scale = 100
 window = pygame.display.set_mode( (WINDOW_SIZE, WINDOW_SIZE) )
 clock = pygame.time.Clock()
 center = [(WINDOW_SIZE/2),(WINDOW_SIZE/2)]
+state = True
+turns = ['u','d','f','b','r','l']
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -326,6 +329,76 @@ def rot(vec, ax,agl):
     newvec = np.array([v_rotated_x, v_rotated_y, v_rotated_z])
     return newvec
 
+def mark(res):
+    global state
+    if res == 't':
+        pygame.draw.line(window, GRUEN, (80,60), (130,10), 5)
+        pygame.draw.line(window, GRUEN, (80,60), (50,30), 5)
+        state = True
+    if res == 'f':
+        pygame.draw.line(window, ROT, (50,30), (110,90), 5)
+        pygame.draw.line(window, ROT, (110,30), (50,90), 5)
+        state = False
+
+def checker():
+    if np.allclose(cube1.p5, cube2.p5, 0.00001) == True:
+        if np.allclose(cube5.p5, cube6.p5, 0.00001) == True:
+            if np.allclose(cube1.p5, cube5.p5, 0.00001) == True:
+                if np.allclose(cube3.p5, cube4.p5, 0.00001) == True:
+                    if np.allclose(cube7.p5, cube8.p5, 0.00001) == True:
+                        if np.allclose(cube3.p5, cube8.p5, 0.00001) == True:
+                            if np.allclose(cube1.p4, cube8.p4, 0.00001) == True:
+                                if np.allclose(cube2.p4, cube3.p4, 0.00001) == True:
+                                    if np.allclose(cube5.p6, cube8.p6, 0.00001) == True:
+                                        if np.allclose(cube1.p4, cube4.p4, 0.00001) == True:
+                                            mark('t')
+                                        else:
+                                            mark('f')
+                                    else:
+                                        mark('f')
+                                else:
+                                    mark('f')
+                            else:
+                                mark('f')
+                        else:
+                            mark('f')
+                    else:
+                        mark('f')
+                else:
+                    mark('f')
+            else:
+                mark('f')
+        else:
+            mark('f')
+    else:
+        mark('f')
+
+def solveR():
+    count = 0
+    while state == False:
+        print(count)
+        k = randint(0,5)
+        turn = turns[k]
+        for i in range(1, 9):
+            cubelet = globals()['cube{}'.format(i)]
+            cubelet.turn(f'{turn}')
+        count = count+1
+        checker()
+    print(count)
+
+
+def scramble():
+    for j in range(25):
+        k = randint(0,5)
+        turn = turns[k]
+        for i in range(1, 9):
+            cubelet = globals()['cube{}'.format(i)]
+            cubelet.turn(f'{turn}')
+
+
+def neibrs(cA, cB):
+    pass
+
 # Main Loop
 running = True
 agl = 5
@@ -341,9 +414,11 @@ while running == True:
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.drawpoint()
+    print(state)
     
     buffer()
-
+    checker()
+    neibrs(cube1, cube2)
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
     cube1.connectpt(cube4.vec[0], cube4.vec[1])
     cube1.connectpt(cube5.vec[0], cube5.vec[1])
@@ -379,15 +454,6 @@ while running == True:
                 for i in range(1, 9):
                     cubelet = globals()['cube{}'.format(i)]
                     cubelet.rotate(agl, 'x')
-            elif event.key == pygame.K_0:
-                cube1.setzero(np.array([-1.0,-1.0, 1.0]))
-                cube2.setzero(np.array([ 1.0,-1.0, 1.0]))
-                cube3.setzero(np.array([ 1.0, 1.0, 1.0]))
-                cube4.setzero(np.array([-1.0, 1.0, 1.0]))
-                cube5.setzero(np.array([-1.0,-1.0,-1.0]))
-                cube6.setzero(np.array([ 1.0,-1.0,-1.0]))
-                cube7.setzero(np.array([ 1.0, 1.0,-1.0]))
-                cube8.setzero(np.array([-1.0, 1.0,-1.0]))
             elif event.key == pygame.K_ESCAPE:
                 running = False   
             elif event.key == pygame.K_r:
@@ -414,6 +480,10 @@ while running == True:
                 for i in range(1, 9):
                     cubelet = globals()['cube{}'.format(i)]
                     cubelet.turn('b')
+            elif event.key == pygame.K_1:
+                scramble()
+            elif event.key == pygame.K_2:
+                solveR()
     pygame.display.update()
 
 exit()
