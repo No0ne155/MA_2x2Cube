@@ -35,6 +35,7 @@ zn = np.array([0.0,0.0,-1.0])
 
 # Class Cube
 class Cube:
+    # Innitialise Cube, with all relevant Variables
     def __init__(self,vec, vec1, vec2, vec3, p4,p5,p6, coX, coY, coZ, nr) -> None:
         # Vector from Center to Corner
         self.vec = vec 
@@ -127,12 +128,8 @@ class Cube:
         x2 = (x2 * scale) + WINDOW_SIZE/2
         y2 = (y2 * scale) + WINDOW_SIZE/2
         pygame.draw.line(window, (255, 255, 255), (x1, y1),(x2,y2))
-    
-    # Resetting the Cube
-    def setzero(self,vec):
-        self.vec = vec
 
-    #Color fill algorithm
+    # Color fill algorithm, with z-buffering
     def fill(self):
         sor = []
         sor.append([self.p4[2],4])
@@ -165,6 +162,7 @@ class Cube:
                 pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
                 pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
         
+    # Turning the Cublet in a certain direction with a certain angle
     def turn(self, turn, agl):
         if turn == 'r':
             if self.vec[0] >0:
@@ -281,7 +279,7 @@ class Cube:
                 self.p5 = rot(self.p5,ax,agl)
                 self.p6 = rot(self.p6,ax,agl)
                 
-#Setup the 8 Cubes
+# Setup the 8 Cubes
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS,1)
 cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yn), np.copy(zp),BLAU, ROT, WEISS,2)
 cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yp), np.copy(zp),BLAU, ROT, GELB,3)
@@ -291,6 +289,7 @@ cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]),
 cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xp), np.copy(yp), np.copy(zn),GRUEN, ROT, GELB,7)
 cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xn), np.copy(yp), np.copy(zn),GRUEN, ORANGE, GELB,8)
 
+# Def to Calculate the order of the piece rendering
 def buffer():
     sort = []
     sort.append([cube1.vec[2],1])
@@ -308,6 +307,7 @@ def buffer():
         cubelet = globals()['cube{}'.format(sorted_list[i][1])]
         cubelet.fill()
 
+# Def to Calculate the new position after rotating a certain vec around axis
 def rot(vec, ax,agl):
     v_x = vec[0]
     v_y = vec[1]
@@ -325,6 +325,7 @@ def rot(vec, ax,agl):
     newvec = np.array([v_rotated_x, v_rotated_y, v_rotated_z])
     return newvec
 
+# Def to show, if the cube solved
 def mark(res):
     global state
     if res == 't':
@@ -336,6 +337,7 @@ def mark(res):
         pygame.draw.line(window, ROT, (110,30), (50,90), 5)
         state = False
 
+# Checker, if the correct pieces are Neighbours = Cube solved
 def checker():
     if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
         if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
@@ -366,6 +368,7 @@ def checker():
     else:
         mark('f')
 
+# Def to solve Random
 def solveR():
     count = 0
     t0=time.time()
@@ -397,6 +400,7 @@ def solveR():
     print(f'This is {tm} minutes')
     print(f'Or {th} hours!!')
 
+# Def to scramble the cube
 def scramble():
     for j in range(25):
         k = randint(0,5)
@@ -407,7 +411,7 @@ def scramble():
             cubelet = globals()['cube{}'.format(i)]
             cubelet.turn(f'{turn}',dire[dir])
 
-
+# Welcome Message
 def welcome():
     print('Wilkommen zu meinem 2x2 Cube simulator')
     print('Um zu beginnen, können sie den Cube mit den Pfeiltasten bewegen')
@@ -435,7 +439,6 @@ while running == True:
         cubelet = globals()['cube{}'.format(i)]
         cubelet.drawpoint()
 
-
     buffer()
     checker()
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
@@ -450,7 +453,6 @@ while running == True:
     cube5.connectpt(cube8.vec[0], cube8.vec[1])
     cube7.connectpt(cube6.vec[0], cube6.vec[1])
     cube7.connectpt(cube8.vec[0], cube8.vec[1])
-
 
     # Key Inputs
     for event in pygame.event.get():
@@ -538,8 +540,6 @@ while running == True:
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
-    
-    # Check for combinations with shift key
     
     pygame.display.update()
 
