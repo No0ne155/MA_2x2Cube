@@ -1,7 +1,8 @@
 # Imports
 import pygame
-from math import*
+import time
 import numpy as np
+from math import*
 from random import*
 
 # Colors
@@ -21,6 +22,7 @@ window = pygame.display.set_mode( (WINDOW_SIZE, WINDOW_SIZE) )
 clock = pygame.time.Clock()
 center = [(WINDOW_SIZE/2),(WINDOW_SIZE/2)]
 state = True
+shift = False
 turns = ['u','d','f','b','r','l']
 
 # Centerpoints
@@ -163,7 +165,7 @@ class Cube:
                 pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
                 pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
         
-    def turn(self, turn):
+    def turn(self, turn, agl):
         if turn == 'r':
             if self.vec[0] >0:
                 lst = [[self.p4[0], 4],[self.p5[0],5],[self.p6[0],6]]
@@ -175,7 +177,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -195,7 +196,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -216,7 +216,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -236,7 +235,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -256,7 +254,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -276,7 +273,6 @@ class Cube:
                     ax = self.p5
                 else:
                     ax = self.p6
-                agl = -90
                 self.vec = rot(self.vec,ax,agl)
                 self.vecx = rot(self.vecx,ax,agl)
                 self.vecy = rot(self.vecy,ax,agl)
@@ -341,64 +337,88 @@ def mark(res):
         state = False
 
 def checker():
-    if np.allclose(cube1.p5, cube2.p5, 0.00001) == True:
-        if np.allclose(cube5.p5, cube6.p5, 0.00001) == True:
-            if np.allclose(cube1.p5, cube5.p5, 0.00001) == True:
-                if np.allclose(cube3.p5, cube4.p5, 0.00001) == True:
-                    if np.allclose(cube7.p5, cube8.p5, 0.00001) == True:
-                        if np.allclose(cube3.p5, cube8.p5, 0.00001) == True:
-                            if np.allclose(cube1.p4, cube8.p4, 0.00001) == True:
-                                if np.allclose(cube2.p4, cube3.p4, 0.00001) == True:
-                                    if np.allclose(cube5.p6, cube8.p6, 0.00001) == True:
-                                        if np.allclose(cube1.p4, cube4.p4, 0.00001) == True:
-                                            mark('t')
-                                        else:
-                                            mark('f')
-                                    else:
-                                        mark('f')
-                                else:
-                                    mark('f')
+    if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
+        if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
+            if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
+                if np.allclose(cube3.vecx, cube4.vecx, 0.00001) == True:
+                    if np.allclose(cube7.vecx, cube8.vecx, 0.00001) == True:
+                        if np.allclose(cube4.vecz, cube8.vecz, 0.00001) == True:
+                            if np.allclose(cube8.vecy, cube5.vecy, 0.00001) == True:
+                                mark('t')
+                             
                             else:
-                                mark('f')
+                                mark('f')                        
                         else:
                             mark('f')
+                      
                     else:
                         mark('f')
+                    
                 else:
                     mark('f')
+               
             else:
                 mark('f')
+              
         else:
             mark('f')
+         
     else:
         mark('f')
 
 def solveR():
     count = 0
+    t0=time.time()
     while state == False:
-        print(count)
+        window.fill((0,0,0))
         k = randint(0,5)
+        dir = randint(0,1)
+        dire = [-90,90]
         turn = turns[k]
         for i in range(1, 9):
             cubelet = globals()['cube{}'.format(i)]
-            cubelet.turn(f'{turn}')
+            cubelet.turn(f'{turn}', dire[dir])
         count = count+1
         checker()
+        buffer()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    exit()
+        pygame.display.update()
     print(count)
-
+    t1 = time.time()
+    ts = t1-t0
+    tm = ts/60
+    th = tm/60
+    print(f'Your Time was{ts} seconds.')
+    print(f'This is {tm} minutes')
+    print(f'Or {th} hours!!')
 
 def scramble():
     for j in range(25):
         k = randint(0,5)
         turn = turns[k]
+        dir = randint(0,1)
+        dire = [-90,90]
         for i in range(1, 9):
             cubelet = globals()['cube{}'.format(i)]
-            cubelet.turn(f'{turn}')
+            cubelet.turn(f'{turn}',dire[dir])
 
 
-def neibrs(cA, cB):
-    pass
+def welcome():
+    print('Wilkommen zu meinem 2x2 Cube simulator')
+    print('Um zu beginnen, können sie den Cube mit den Pfeiltasten bewegen')
+    print('Um eine Drehung vorzunehmen, drücken Sie eine der folgenden Tasten:')
+    print(turns)
+    print('Dies nimmt eine Rotation der entsprechenden seite in Uhrzeigerrichtung vor')
+    print('Um eine Drehung gegen den Uhrzeigersinn vorzunehmen, drücken Sie zusätzlich "shift Links"')
+    print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
+    print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
 
+welcome()
 # Main Loop
 running = True
 agl = 5
@@ -414,11 +434,10 @@ while running == True:
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.drawpoint()
-    print(state)
-    
+
+
     buffer()
     checker()
-    neibrs(cube1, cube2)
     cube1.connectpt(cube2.vec[0], cube2.vec[1])    
     cube1.connectpt(cube4.vec[0], cube4.vec[1])
     cube1.connectpt(cube5.vec[0], cube5.vec[1])
@@ -457,33 +476,71 @@ while running == True:
             elif event.key == pygame.K_ESCAPE:
                 running = False   
             elif event.key == pygame.K_r:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('r')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('r',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('r',90)
             elif event.key == pygame.K_l:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('l')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('l',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('l',90)
             elif event.key == pygame.K_u:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('u')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('u',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('u',90)
             elif event.key == pygame.K_d:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('d')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('d',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('d',90)
             elif event.key == pygame.K_f:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('f')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('f',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('f',90)
             elif event.key == pygame.K_b:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn('b')
+                if not shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('b',-90)
+                if shift:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('b',90)
             elif event.key == pygame.K_1:
                 scramble()
             elif event.key == pygame.K_2:
                 solveR()
+            elif event.key == pygame.K_LSHIFT:
+                shift = True  # Set the shift_pressed flag
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_LSHIFT:
+                shift = False  # Reset the shift_pressed flag
+    
+    # Check for combinations with shift key
+    
     pygame.display.update()
 
 exit()
