@@ -4,7 +4,9 @@ import time
 import numpy as np
 from math import*
 from random import*
+from pygame import font
 
+pygame.init()
 # Colors
 ORANGE  = ( 255, 140, 0)
 ROT     = ( 255, 0, 0)
@@ -24,6 +26,9 @@ center = [(WINDOW_SIZE/2),(WINDOW_SIZE/2)]
 state = True
 shift = False
 turns = ['u','d','f','b','r','l']
+font_path = pygame.font.get_default_font()  # This gets the path of the default font on your system
+myfont = pygame.font.Font(font_path, 26)
+file_path = 'cubedata.txt'
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -110,24 +115,6 @@ class Cube:
                 self.p5[2] = -p5x * s + p5z * c
                 self.p6[0] = p6x * c + p6z * s
                 self.p6[2] = -p6x * s + p6z * c
-
-    # Drawing points
-    def drawpoint(self):
-        pygame.draw.circle(window, (255, 0, 0), (self.vec[0] *100+300, self.vec[1] *100+300),5)
-        pygame.draw.circle(window, (255,255,0), (self.vecx[0]*100+300, self.vecx[1]*100+300),5)
-        pygame.draw.circle(window, (255,255,0), (self.vecy[0]*100+300, self.vecy[1]*100+300),5)
-        pygame.draw.circle(window, (255,255,0), (self.vecz[0]*100+300, self.vecz[1]*100+300),5)
-        pygame.draw.circle(window, (255,0,255), (self.p4[0]*100+300, self.p4[1]*100+300),5)
-        pygame.draw.circle(window, (255,0,255), (self.p5[0]*100+300, self.p5[1]*100+300),5)
-        pygame.draw.circle(window, (255,0,255), (self.p6[0]*100+300, self.p6[1]*100+300),5)
-        
-    # Drawing lines
-    def connectpt(self, x2,y2):
-        x1 = (self.vec[0] * 100) + WINDOW_SIZE/2
-        y1 = (self.vec[1] * 100) + WINDOW_SIZE/2
-        x2 = (x2 * scale) + WINDOW_SIZE/2
-        y2 = (y2 * scale) + WINDOW_SIZE/2
-        pygame.draw.line(window, (255, 255, 255), (x1, y1),(x2,y2))
 
     # Color fill algorithm, with z-buffering
     def fill(self):
@@ -372,7 +359,8 @@ def checker():
 def solveR():
     count = 0
     t0=time.time()
-    while state == False:
+    run = True
+    while state == False and run == True:
         window.fill((0,0,0))
         k = randint(0,5)
         dir = randint(0,1)
@@ -382,14 +370,19 @@ def solveR():
             cubelet = globals()['cube{}'.format(i)]
             cubelet.turn(f'{turn}', dire[dir])
         count = count+1
+        display_text(f"Moves: {count}", 370, 50)
         checker()
         buffer()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                print(count)
                 exit()
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    print(count)
                     exit()
+                elif event.key == pygame.K_0:
+                    run = False
         pygame.display.update()
     print(count)
     t1 = time.time()
@@ -399,6 +392,10 @@ def solveR():
     print(f'Your Time was{ts} seconds.')
     print(f'This is {tm} minutes')
     print(f'Or {th} hours!!')
+    print(f'Solved is {state}')
+    if state:
+        with open(file_path, 'a') as file:
+            file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
 # Def to scramble the cube
 def scramble():
@@ -418,9 +415,15 @@ def welcome():
     print('Um eine Drehung vorzunehmen, drücken Sie eine der folgenden Tasten:')
     print(turns)
     print('Dies nimmt eine Rotation der entsprechenden seite in Uhrzeigerrichtung vor')
-    print('Um eine Drehung gegen den Uhrzeigersinn vorzunehmen, drücken Sie zusätzlich "shift Links"')
+    print('Um eine Drehung gegen den Uhrzeigersinn vorzunehmen, drücken Sie zusätzlich "Shift Links"')
     print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
     print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
+    print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen, und selbst zu lösen beginnen.')
+
+# Def to show text on Screen
+def display_text(text, x, y):
+    text_surface = myfont.render(text, True, WEISS)
+    window.blit(text_surface, (x, y))
 
 welcome()
 # Main Loop
@@ -431,28 +434,8 @@ while running == True:
     clock.tick(60)
     window.fill((0,0,0))
 
-    # Draw Center point
-    pygame.draw.circle(window, (255, 0, 0), (WINDOW_SIZE/2, WINDOW_SIZE/2), 5)
-
-    # Draw all the points and lines
-    for i in range(1, 9):
-        cubelet = globals()['cube{}'.format(i)]
-        cubelet.drawpoint()
-
     buffer()
     checker()
-    cube1.connectpt(cube2.vec[0], cube2.vec[1])    
-    cube1.connectpt(cube4.vec[0], cube4.vec[1])
-    cube1.connectpt(cube5.vec[0], cube5.vec[1])
-    cube2.connectpt(cube3.vec[0], cube3.vec[1])
-    cube2.connectpt(cube6.vec[0], cube6.vec[1])
-    cube3.connectpt(cube7.vec[0], cube7.vec[1])
-    cube3.connectpt(cube4.vec[0], cube4.vec[1])
-    cube4.connectpt(cube8.vec[0], cube8.vec[1])
-    cube5.connectpt(cube6.vec[0], cube6.vec[1])
-    cube5.connectpt(cube8.vec[0], cube8.vec[1])
-    cube7.connectpt(cube6.vec[0], cube6.vec[1])
-    cube7.connectpt(cube8.vec[0], cube8.vec[1])
 
     # Key Inputs
     for event in pygame.event.get():
