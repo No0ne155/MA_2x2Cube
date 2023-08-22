@@ -1,0 +1,4 @@
+Cube Data collected by random generator:
+Finished random in: 1728.034482717514 sec, 1187965 turns.
+Finished random in: 4827.7090384960175 sec, 3196609 turns.
+Finished random in: 6835.628933429718 sec, 4401161 turns.
