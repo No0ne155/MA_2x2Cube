@@ -68,8 +68,8 @@ while spielaktiv:
                 print("pressed 'arrowdown'")
             elif event.key == pygame.K_SPACE:
                 print("pressed 'SPACE'")
-                #cube1.display()
-                #cube2.display()
+                cube1.display()
+                cube2.display()
                 cube3.display()
             elif event.key == pygame.K_u:
                 print("pressed 'u'")

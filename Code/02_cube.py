@@ -61,8 +61,6 @@ class Cube:
 cubicle1 = Cube((1,1,1), [WEISS, ROT, GRUEN])
 
 
-Cube()
-
 # Schleife Hauptprogramm
 move = 'none'
 while spielaktiv:
