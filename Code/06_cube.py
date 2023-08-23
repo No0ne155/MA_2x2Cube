@@ -29,6 +29,8 @@ turns = ['u','d','f','b','r','l']
 font_path = pygame.font.get_default_font()  # This gets the path of the default font on your system
 myfont = pygame.font.Font(font_path, 26)
 file_path = 'cubedata.txt'
+loop = False
+agl = 5
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -357,6 +359,7 @@ def checker():
 
 # Def to solve Random
 def solveR():
+    global loop
     count = 0
     t0=time.time()
     run = True
@@ -371,6 +374,10 @@ def solveR():
             cubelet.turn(f'{turn}', dire[dir])
         count = count+1
         display_text(f"Moves: {count}", 370, 50)
+        if loop == True:
+            display_text('L', 10,10)
+        if loop == False:
+            display_text('N', 10,10)
         checker()
         buffer()
         for event in pygame.event.get():
@@ -383,6 +390,11 @@ def solveR():
                     exit()
                 elif event.key == pygame.K_0:
                     run = False
+                elif event.key == pygame.K_w:
+                    if loop == True:
+                        loop = False
+                    elif loop == False:
+                        loop = True
         pygame.display.update()
     print(count)
     t1 = time.time()
@@ -396,6 +408,7 @@ def solveR():
     if state:
         with open(file_path, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
+    
 
 # Def to scramble the cube
 def scramble():
@@ -419,16 +432,32 @@ def welcome():
     print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
     print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
     print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen, und selbst zu lösen beginnen.')
+    print('')
+    print('')
 
 # Def to show text on Screen
 def display_text(text, x, y):
     text_surface = myfont.render(text, True, WEISS)
     window.blit(text_surface, (x, y))
 
+def setupR():
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.rotate(agl, 'y')
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.rotate(agl, 'y')
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.rotate(agl, 'x')
+    for i in range(1, 9):
+        cubelet = globals()['cube{}'.format(i)]
+        cubelet.rotate(agl, 'x')
+    
+setupR()
 welcome()
 # Main Loop
 running = True
-agl = 5
 while running == True:
     # Set Timer
     clock.tick(60)
@@ -520,10 +549,19 @@ while running == True:
                 solveR()
             elif event.key == pygame.K_LSHIFT:
                 shift = True  # Set the shift_pressed flag
+            elif event.key == pygame.K_w:
+                if loop:
+                    loop = False
+                elif not loop:
+                    loop = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
+
+        
+    if loop:
+        scramble()
+        solveR()
     
     pygame.display.update()
 
-exit()
