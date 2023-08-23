@@ -1,4 +1,11 @@
 Cube Data collected by random generator:
-Finished random in: 1728.034482717514 sec, 1187965 turns.
-Finished random in: 4827.7090384960175 sec, 3196609 turns.
-Finished random in: 6835.628933429718 sec, 4401161 turns.
+XFinished random in: 1728.034482717514 sec, 1187965 turns.
+XFinished random in: 4827.7090384960175 sec, 3196609 turns.
+XFinished random in: 6835.628933429718 sec, 4401161 turns.
+XFinished random in: 617.9915044307709 sec, 424653 turns.
+XFinished random in: 4703.74428486824 sec, 3240347 turns.
+XFinished random in: 14309.443356990814 sec, 9266276 turns.
+XFinished random in: 3169.3230061531067 sec, 2041769 turns.
+XFinished random in: 4358.527095794678 sec, 2658638 turns.
+XFinished random in: 3324.8532316684723 sec, 2142492 turns.
+XFinished random in: 5639.855585336685 sec, 3383538 turns.
