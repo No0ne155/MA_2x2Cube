@@ -30,7 +30,7 @@ font_path = pygame.font.get_default_font()  # This gets the path of the default 
 myfont = pygame.font.Font(font_path, 26)
 file_path = 'cubedata.txt'
 loop = False
-agl = 5
+agl = 10
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -446,18 +446,13 @@ def setupR():
         cubelet.rotate(agl, 'y')
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
-        cubelet.rotate(agl, 'y')
-    for i in range(1, 9):
-        cubelet = globals()['cube{}'.format(i)]
-        cubelet.rotate(agl, 'x')
-    for i in range(1, 9):
-        cubelet = globals()['cube{}'.format(i)]
         cubelet.rotate(agl, 'x')
     
 setupR()
 welcome()
 # Main Loop
 running = True
+agl = 5
 while running == True:
     # Set Timer
     clock.tick(60)
