@@ -29,6 +29,7 @@ turns = ['u','d','f','b','r','l']
 font_path = pygame.font.get_default_font()  # This gets the path of the default font on your system
 myfont = pygame.font.Font(font_path, 26)
 file_path = 'cubedata.txt'
+file_path2 = 'cubedata2.txt'
 loop = False
 agl = 10
 
@@ -378,6 +379,7 @@ def solveR():
             display_text('L', 10,10)
         if loop == False:
             display_text('N', 10,10)
+        display_text('R', 550,570)
         checker()
         buffer()
         for event in pygame.event.get():
@@ -409,6 +411,75 @@ def solveR():
         with open(file_path, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
     
+
+def solveR2():
+    global loop
+    count = 0
+    t0=time.time()
+    run = True
+    lastTurn = 'x'
+    while state == False and run == True:
+        window.fill((0,0,0))
+        dir = randint(0,2)
+        dire = [-90, 90, 180]
+        if lastTurn == 'x':
+            t = ['u','d','f','b','r','l']
+            k = randint(0,5)
+            turn = t[k]
+        elif lastTurn == 'u' or lastTurn == 'd':
+            t = ['f','b','r','l']
+            k = randint(0,3)
+            turn = t[k]
+        elif lastTurn == 'f' or lastTurn == 'b':
+            t = ['d','u','r','l']
+            k = randint(0,3)
+            turn = t[k]
+        elif lastTurn == 'r' or lastTurn == 'l':
+            t = ['f','b','u','d']
+            k = randint(0,3)
+            turn = t[k]
+        print(turn)
+        lastTurn=turn
+        for i in range(1, 9):
+            cubelet = globals()['cube{}'.format(i)]
+            cubelet.turn(f'{turn}', dire[dir])
+        count = count+1
+        display_text(f"Moves: {count}", 370, 50)
+        if loop == True:
+            display_text('L', 10,10)
+        if loop == False:
+            display_text('N', 10,10)
+        display_text('R2', 550,570)
+        checker()
+        buffer()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                print(count)
+                exit()
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    print(count)
+                    exit()
+                elif event.key == pygame.K_0:
+                    run = False
+                elif event.key == pygame.K_w:
+                    if loop == True:
+                        loop = False
+                    elif loop == False:
+                        loop = True
+        pygame.display.update()
+    print(count)
+    t1 = time.time()
+    ts = t1-t0
+    tm = ts/60
+    th = tm/60
+    print(f'Your Time was{ts} seconds.')
+    print(f'This is {tm} minutes')
+    print(f'Or {th} hours!!')
+    print(f'Solved is {state}')
+    if state:
+        with open(file_path2, 'a') as file:
+            file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
 # Def to scramble the cube
 def scramble():
@@ -549,6 +620,8 @@ while running == True:
                     loop = False
                 elif not loop:
                     loop = True
+            elif event.key == pygame.K_3:
+                solveR2()
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
