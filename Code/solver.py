@@ -3,8 +3,9 @@ from __future__ import print_function
 import numpy as np
 import py222
 
-hO = np.ones(729, dtype=np.int) * 12
-hP = np.ones(117649, dtype=np.int) * 12
+hO = np.ones(729, dtype=int) * 12
+hP = np.ones(117649, dtype=int) * 12
+solvedalg = ''
 
 moveStrs = {0: "U", 1: "U'", 2: "U2", 3: "R", 4: "R'", 5: "R2", 6: "F", 7: "F'", 8: "F2"}
 
@@ -50,10 +51,12 @@ def IDAStar(s, d, moves, lm=-3):
 
 # print a move sequence from an array of move indices
 def printMoves(moves):
+  global solvedalg
   moveStr = ""
   for m in moves:
     moveStr += moveStrs[m] + " "
-  print(moveStr)
+  #print(moveStr)
+  solvedalg = solvedalg + moveStr + 'gap'
 
 # solve a cube state
 def solveCube(s):
@@ -61,20 +64,20 @@ def solveCube(s):
   py222.printCube(s)
 
   # FC-normalize stickers
-  print("normalizing stickers...")
+  #print("normalizing stickers...")
   s = py222.normFC(s)
 
   # generate pruning tables
-  print("generating pruning tables...")
+  #print("generating pruning tables...")
   genOTable(py222.initState(), 0)
   genPTable(py222.initState(), 0)
 
   # run IDA*
-  print("searching...")
+  #print("searching...")
   solved = False
   depth = 1
   while depth <= 11 and not solved:
-    print("depth {}".format(depth))
+    #print("depth {}".format(depth))
     solved = IDAStar(s, depth, [])
     depth += 1
 
