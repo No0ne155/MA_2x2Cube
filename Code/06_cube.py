@@ -2,9 +2,12 @@
 import pygame
 import time
 import numpy as np
+import py222
+import solver
 from math import*
 from random import*
 from pygame import font
+
 
 pygame.init()
 # Colors
@@ -32,6 +35,9 @@ file_path = 'cubedata.txt'
 file_path2 = 'cubedata2.txt'
 loop = False
 agl = 10
+scramblelst = ""
+cube222 = py222.initState()
+add = ''
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -481,16 +487,58 @@ def solveR2():
         with open(file_path2, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
+
+
 # Def to scramble the cube
 def scramble():
+    global scramblelst
     for j in range(25):
         k = randint(0,5)
         turn = turns[k]
-        dir = randint(0,1)
-        dire = [-90,90]
+        dir = randint(0,2)
+        dire = [-90,90,180]
+        if dire[dir] == -90:
+            add = ''
+        elif dire[dir] == 90:
+            add = "'"
+        elif dire[dir] == 180:
+            add = '2'
+        scramblelst =scramblelst + turn.upper()+add+' '
         for i in range(1, 9):
             cubelet = globals()['cube{}'.format(i)]
             cubelet.turn(f'{turn}',dire[dir])
+    print(scramblelst)
+
+def solve222():
+    global cube222
+    t0 = time.time()
+    cube222 = py222.doAlgStr(cube222, scramblelst)
+    alg = solver.solveCube(cube222)
+    print(alg)
+    algs = solver.solvedalg
+    head, sep, tail = algs.partition("gap")
+    algs = head.split()
+    for i in range(len(algs)):
+        algs[i]=algs[i].lower()
+    for i in range(len(algs)):
+        if len(algs[i]) == 2:
+            if algs[i][1] == '2':
+                for l in range(1, 9):
+                    cubelet = globals()['cube{}'.format(l)]
+                    cubelet.turn(f'{algs[i][0]}',180)
+            elif algs[i][1] == "'":
+                for l in range(1, 9):
+                    cubelet = globals()['cube{}'.format(l)]
+                    cubelet.turn(f'{algs[i][0]}',90)
+        else:
+            for l in range(1, 9):
+                cubelet = globals()['cube{}'.format(l)]
+                cubelet.turn(f'{algs[i]}',-90)
+    t1 = time.time()
+    ti = t1 - t0
+    with open(file_path2, 'a') as file:
+        file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
+
 
 # Welcome Message
 def welcome():
@@ -622,6 +670,8 @@ while running == True:
                     loop = True
             elif event.key == pygame.K_3:
                 solveR2()
+            elif event.key == pygame.K_4:
+                solve222()
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
