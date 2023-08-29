@@ -487,8 +487,6 @@ def solveR2():
         with open(file_path2, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
-
-
 # Def to scramble the cube
 def scramble():
     global scramblelst
@@ -538,6 +536,7 @@ def solve222():
     ti = t1 - t0
     with open(file_path2, 'a') as file:
         file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
+    print(ti, len(algs))
 
 
 # Welcome Message
@@ -551,8 +550,9 @@ def welcome():
     print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
     print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
     print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen, und selbst zu lösen beginnen.')
-    print('')
-    print('')
+    print('Mit der Taste "W" könnens Sie in den Loop eintreten, d.h. nach dem lösen, verdreht er sich wieder, und beginnt zu lösen.')
+    print('Mit der Taste "3" können Sie einen Effizienteren Zufallsalgorithmus zum lösen wählen')
+    print('Mit der Taste "4" können Sie den Cube mit einem Effizienzsolver lösen.')
 
 # Def to show text on Screen
 def display_text(text, x, y):
