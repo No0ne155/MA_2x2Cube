@@ -180,6 +180,8 @@ def indexOP(sOP):
 
 # print state of the cube
 def printCube(s):
+  pass
+'''
   print("      ┌──┬──┐")
   print("      │ {}│ {}│".format(s[0], s[1]))
   print("      ├──┼──┤")
@@ -193,7 +195,7 @@ def printCube(s):
   print("      ├──┼──┤")
   print("      │ {}│ {}│".format(s[14], s[15]))
   print("      └──┴──┘")
-
+'''
 if __name__ == "__main__":
   # get solved state
   s = initState()
