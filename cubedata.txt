@@ -25,3 +25,10 @@ XFinished random in: 595.3122863769531 sec, 388807 turns.
 XFinished random in: 5015.795840263367 sec, 3396226 turns.
 XFinished random in: 26466.21874374738 sec, 17978504 turns.
 XFinished random in: 8899.106723546982 sec, 5798245 turns.
+XFinished random in: 15961.801324605942 sec, 10302391 turns.
+XFinished random in: 6834.786890506744 sec, 4378990 turns.
+XFinished random in: 5542.19960474968 sec, 3544564 turns.
+XFinished random in: 3238.859972000122 sec, 2071760 turns.
+XFinished random in: 211.27994108200073 sec, 135064 turns.
+XFinished random in: 755.5024952888489 sec, 483072 turns.
+Finished random in: 0.0 sec, 0 turns.
