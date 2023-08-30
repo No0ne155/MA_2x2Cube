@@ -445,8 +445,6 @@ def omaCheck():
             cubelet.turn('r',90)
         print('oma')
         
-
-    
 # Def more efficient random
 def solveR2():
     global loop
@@ -568,8 +566,7 @@ def solve222():
     with open(file_path2, 'a') as file:
         file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
     print(ti, len(algs))
-            
-                        
+                              
 # Welcome Message
 def welcome():
     print('Wilkommen zu meinem 2x2 Cube simulator')
