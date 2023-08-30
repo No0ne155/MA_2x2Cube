@@ -38,6 +38,8 @@ agl = 10
 scramblelst = ""
 cube222 = py222.initState()
 add = ''
+oma = False
+solvedoma = False
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -343,24 +345,19 @@ def checker():
                         if np.allclose(cube4.vecz, cube8.vecz, 0.00001) == True:
                             if np.allclose(cube8.vecy, cube5.vecy, 0.00001) == True:
                                 mark('t')
-                             
+                                solved = True 
                             else:
                                 mark('f')                        
                         else:
-                            mark('f')
-                      
+                            mark('f')  
                     else:
-                        mark('f')
-                    
+                        mark('f')                   
                 else:
-                    mark('f')
-               
+                    mark('f')           
             else:
-                mark('f')
-              
+                mark('f')          
         else:
-            mark('f')
-         
+            mark('f')       
     else:
         mark('f')
 
@@ -416,8 +413,41 @@ def solveR():
     if state:
         with open(file_path, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
-    
 
+# Def to check OneMoveAway
+def omaCheck():
+    global oma
+    oma = False
+    if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
+        if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
+            if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
+                if np.allclose(cube3.vecx, cube4.vecx, 0.00001) == True:
+                    if np.allclose(cube7.vecx, cube8.vecx, 0.00001) == True:
+                        if np.allclose(cube4.vecz, cube8.vecz, 0.00001) == True:
+                            oma = True
+    elif np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
+        if np.allclose(cube3.vecx, cube4.vecx, 0.00001) == True:
+            if np.allclose(cube1.vecy, cube4.vecy, 0.00001) == True:
+                if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
+                    if np.allclose(cube7.vecx, cube8.vecx, 0.00001) == True:
+                        if np.allclose(cube5.vecy, cube8.vecy, 0.00001) == True:
+                            oma = True
+    elif np.allclose(cube1.vecy, cube4.vecy, 0.00001) == True:
+        if np.allclose(cube5.vecy, cube8.vecy, 0.00001) == True:
+            if np.allclose(cube5.vecz, cube1.vecz, 0.00001) == True:
+                if np.allclose(cube2.vecy, cube3.vecy, 0.00001) == True:
+                    if np.allclose(cube6.vecy, cube7.vecy, 0.00001) == True:
+                        if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
+                            oma = True
+    if oma == True:
+        for i in range(1, 9):
+            cubelet = globals()['cube{}'.format(i)]
+            cubelet.turn('r',90)
+        print('oma')
+        
+
+    
+# Def more efficient random
 def solveR2():
     global loop
     count = 0
@@ -428,6 +458,7 @@ def solveR2():
         window.fill((0,0,0))
         dir = randint(0,2)
         dire = [-90, 90, 180]
+        omaCheck()
         if lastTurn == 'x':
             t = ['u','d','f','b','r','l']
             k = randint(0,5)
@@ -444,7 +475,6 @@ def solveR2():
             t = ['f','b','u','d']
             k = randint(0,3)
             turn = t[k]
-        print(turn)
         lastTurn=turn
         for i in range(1, 9):
             cubelet = globals()['cube{}'.format(i)]
@@ -507,6 +537,7 @@ def scramble():
             cubelet.turn(f'{turn}',dire[dir])
     print(scramblelst)
 
+# py222 solver
 def solve222():
     global cube222
     t0 = time.time()
@@ -537,8 +568,8 @@ def solve222():
     with open(file_path2, 'a') as file:
         file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
     print(ti, len(algs))
-
-
+            
+                        
 # Welcome Message
 def welcome():
     print('Wilkommen zu meinem 2x2 Cube simulator')
