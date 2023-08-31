@@ -1,17 +1,11 @@
-# Importieren der Pygame-Bibliothek
 import pygame
 from random import*
 import numpy as np
 
-#Matrizen
-#Rotations Matrix
-#numpy
-
-
-# initialisieren von pygame
+#Pygame initialisieren
 pygame.init()
 
-#farben definieren
+#farben
 ORANGE  = ( 255, 140, 0)
 ROT     = ( 255, 0, 0)
 GRUEN   = ( 0, 255, 0)
@@ -20,60 +14,50 @@ WEISS   = ( 255, 255, 255)
 GELB    = (255,255,0)
 BLAU    = (0,0,255)
 
-# Fenster öffnen
-screen = pygame.display.set_mode((640, 480))
-
-# Titel für Fensterkopf
+#pygame fenster
+screen = pygame.display.set_mode((800, 600))
 pygame.display.set_caption("2x2 Cube Sim")
+screen.fill(SCHWARZ)
 
-# solange die Variable True ist, soll das Spiel laufen
+#pygame loop vorbereiten
 spielaktiv = True
-
-# Bildschirm Aktualisierungen einstellen
 clock = pygame.time.Clock()
 
-# Spielfeld färben
-colors = [WEISS, ORANGE, GRUEN, ROT, BLAU, GELB]
-screen.fill(SCHWARZ)
-origin_X = 10
-origin_Y = 20
-playerColor = SCHWARZ
-
-pos       = [[[150, 90],[400,190],[50, 190]],
-             [[200, 90],[300,190],[350,190]],
-             [[200,140],[200,190],[250,190]],
-             [[150,140],[100,190],[150,190]],
-             [[100,240],[150,240],[150,290]],
-             [[200,290],[200,240],[250,240]],
-             [[200,340],[300,240],[350,240]],
-             [[50, 240],[400,240],[150,340]]]
-
 class Cube:
-    def __init__(self, pos, colors):
-        self.pos = pos
+    def __init__(self, colors, posvec) -> None:
+        self.posvec = posvec
         self.colors = colors
-        
+ 
     def display(self):
-        pygame.draw.rect(screen, colors[self.colors[0]], [self.pos[0][0], self.pos[0][1], 50, 50])
-        pygame.draw.rect(screen, colors[self.colors[1]], [self.pos[1][0], self.pos[1][1], 50, 50])
-        pygame.draw.rect(screen, colors[self.colors[2]], [self.pos[2][0], self.pos[2][1], 50, 50])
+        if self.posvec == (1,1,1):
+            pygame.draw.polygon(screen, self.colors[0], [[400,300], [487, 250], [400, 200], [313, 250]], 0)
+            pygame.draw.polygon(screen, self.colors[1], [[400,300], [400, 400], [487, 350], [487, 250]], 0)
+            pygame.draw.polygon(screen, self.colors[2], [[400,300], [400, 400], [313, 350], [313, 250]], 0)
+            
+        elif self.posvec == (1,-1,1):
+            pygame.draw.polygon(screen, self.colors[1], [[400,530], [487, 480], [400, 430], [313, 480]], 0)
+            pygame.draw.polygon(screen, self.colors[0], [[400,500], [400, 400], [487, 350], [487, 450]], 0)
+            pygame.draw.polygon(screen, self.colors[2], [[400,500], [400, 400], [313, 350], [313, 450]], 0)
+            
+        elif self.posvec == (-1,-1,1):
+            pygame.draw.polygon(screen, self.colors[1], [[400,530], [487, 480], [400, 430], [313, 480]], 0)
+            pygame.draw.polygon(screen, self.colors[2], [[313,350], [313, 450], [326, 400], [326, 300]], 0)
+            pygame.draw.polygon(screen, self.colors[0], [[400,500], [400, 400], [313, 350], [313, 450]], 0)
+            
 
-cubicle1 = Cube((1,1,1), [WEISS, ROT, GRUEN])
+
+cube1 = Cube([WEISS, BLAU, ROT], ( 1, 1, 1))
+cube2 = Cube([BLAU, GELB, ROT],  ( 1,-1, 1))
+cube3 = Cube([ROT, GELB, GRUEN], (-1,-1, 1))
 
 
-# Schleife Hauptprogramm
-move = 'none'
 while spielaktiv:
-    randomnr = randint(0,5)
-    color = colors[randomnr]
-    
-    # Überprüfen, ob Nutzer eine Aktion durchgeführt hat
+    # Key events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             spielaktiv = False
             print("pressed 'QUIT'")
         elif event.type == pygame.KEYDOWN:
-            # Taste für Spieler 1
             if event.key == pygame.K_RIGHT:
                 print("pressed 'arrowright'")
             elif event.key == pygame.K_LEFT:
@@ -83,8 +67,10 @@ while spielaktiv:
             elif event.key == pygame.K_DOWN:
                 print("pressed 'arrowdown'")
             elif event.key == pygame.K_SPACE:
-                print("pressed ' '")
-                playerColor = color
+                print("pressed 'SPACE'")
+                cube1.display()
+                cube2.display()
+                #cube3.display()
             elif event.key == pygame.K_u:
                 print("pressed 'u'")
             elif event.key == pygame.K_f:
@@ -95,28 +81,26 @@ while spielaktiv:
                 origin_X = origin_X - 10
             elif event.key == pygame.K_s:
                 print("pressed 's'")
-                origin_Y = origin_Y +10
             elif event.key == pygame.K_d:
                 print("pressed 'd'")
-                origin_X = origin_X + 10
+            elif event.key == pygame.K_w:
+                print("pressed 'w'")
+                screen.fill(SCHWARZ)
+            elif event.key == pygame.K_ESCAPE:
+                print("pressed 'esc'")
+                spielaktiv = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             print("clicked mouse")
-            playerColor = color
 
-    # Spiellogik hier integrieren
 
-    # Spielfeld/figuren zeichnen
-    screen.fill(SCHWARZ)
-    def player():
-        pygame.draw.rect(screen, playerColor, [origin_X, origin_Y, 50, 50])
-        pygame.draw.rect(screen, SCHWARZ, [origin_X, origin_Y, 50, 50],1)
-    player()
+
+    #logik
     
-    # Fenster aktualisieren
+    #Fenster aktualisieren
     pygame.display.flip()
 
-    # Refresh-Zeiten festlegen
+    #Framerate festlegen
     clock.tick(60)
 
 pygame.quit()

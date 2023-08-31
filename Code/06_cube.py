@@ -8,6 +8,8 @@ from math import*
 from random import*
 from pygame import font
 
+# Monte carlo simulation
+# Abweichung durch rotation
 
 pygame.init()
 # Colors
@@ -40,6 +42,7 @@ cube222 = py222.initState()
 add = ''
 oma = False
 solvedoma = False
+omac = False
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -199,7 +202,6 @@ class Cube:
                 self.p4 = rot(self.p4,ax,agl)
                 self.p5 = rot(self.p5,ax,agl)
                 self.p6 = rot(self.p6,ax,agl)
-
         
         elif turn == 'u':
             if self.vec[1] < 0:
@@ -337,6 +339,7 @@ def mark(res):
 
 # Checker, if the correct pieces are Neighbours = Cube solved
 def checker():
+    global omac
     if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
         if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
             if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
@@ -345,7 +348,7 @@ def checker():
                         if np.allclose(cube4.vecz, cube8.vecz, 0.00001) == True:
                             if np.allclose(cube8.vecy, cube5.vecy, 0.00001) == True:
                                 mark('t')
-                                solved = True 
+                                omac = True 
                             else:
                                 mark('f')                        
                         else:
@@ -417,6 +420,7 @@ def solveR():
 # Def to check OneMoveAway
 def omaCheck():
     global oma
+
     oma = False
     if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
         if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
@@ -454,30 +458,60 @@ def solveR2():
     lastTurn = 'x'
     while state == False and run == True:
         window.fill((0,0,0))
-        dir = randint(0,2)
-        dire = [-90, 90, 180]
+        print(oma)
         omaCheck()
-        if lastTurn == 'x':
-            t = ['u','d','f','b','r','l']
-            k = randint(0,5)
-            turn = t[k]
-        elif lastTurn == 'u' or lastTurn == 'd':
-            t = ['f','b','r','l']
-            k = randint(0,3)
-            turn = t[k]
-        elif lastTurn == 'f' or lastTurn == 'b':
-            t = ['d','u','r','l']
-            k = randint(0,3)
-            turn = t[k]
-        elif lastTurn == 'r' or lastTurn == 'l':
-            t = ['f','b','u','d']
-            k = randint(0,3)
-            turn = t[k]
-        lastTurn=turn
-        for i in range(1, 9):
-            cubelet = globals()['cube{}'.format(i)]
-            cubelet.turn(f'{turn}', dire[dir])
-        count = count+1
+        print(oma)
+        if oma == False:
+            print(oma)
+            dir = randint(0,2)
+            dire = [-90, 90, 180]
+            if lastTurn == 'x':
+                t = ['u','d','f','b','r','l']
+                k = randint(0,5)
+                turn = t[k]
+            elif lastTurn == 'u' or lastTurn == 'd':
+                t = ['f','b','r','l']
+                k = randint(0,3)
+                turn = t[k]
+            elif lastTurn == 'f' or lastTurn == 'b':
+                t = ['d','u','r','l']
+                k = randint(0,3)
+                turn = t[k]
+            elif lastTurn == 'r' or lastTurn == 'l':
+                t = ['f','b','u','d']
+                k = randint(0,3)
+                turn = t[k]
+            lastTurn=turn
+            print(turn)
+            for i in range(1, 9):
+                cubelet = globals()['cube{}'.format(i)]
+                cubelet.turn(f'{turn}', dire[dir])
+            count = count+1
+        elif oma == True:
+            print(oma)
+            for i in range(1, 9):
+                cubelet = globals()['cube{}'.format(i)]
+                cubelet.turn('u',-90)
+            print('c1')
+            checker()
+            if omac == False:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn('u',-90)
+                print('c2')
+                checker()
+                if omac == False:
+                    for i in range(1, 9):
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('u',-90)
+                    print('c3')
+                    checker()
+                    if omac == False:
+                        for i in range(1, 9):
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('u',-90)
+                        print('c4')
+                        checker()
         display_text(f"Moves: {count}", 370, 50)
         if loop == True:
             display_text('L', 10,10)
