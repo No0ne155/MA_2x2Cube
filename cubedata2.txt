@@ -50,3 +50,10 @@ XFinished random in: 2.4469335079193115 sec, 9 turns.
 XFinished random in: 1.8013238906860352 sec, 8 turns.
 Finished random in: 2.0601463317871094 sec, 9 turns.
 Finished random in: 1.6410996913909912 sec, 0 turns.
+Finished random in: 0.0 sec, 0 turns.
+Finished random in: 0.0 sec, 0 turns.
+Finished random in: 3.9432363510131836 sec, 10 turns.
+Finished random in: 2.192417621612549 sec, 9 turns.
+Finished random in: 0.47960972785949707 sec, 9 turns.
+Finished random in: 0.0561678409576416 sec, 9 turns.
+Finished random in: 2.8171162605285645 sec, 9 turns.
