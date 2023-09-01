@@ -48,9 +48,20 @@ XFinished random in: 962.6339166164398 sec, 600067 turns.
 XFinished random in: 3848.7952337265015 sec, 2384563 turns.
 XFinished random in: 7834.780272960663 sec, 4870321 turns.
 XFinished random in: 5290.937596797943 sec, 3293576 turns.
-Finished random in: 0.0 sec, 0 turns.
 
 NEW CODE
 !!!
 
-
+Finished random in: 3709.2392966747284 sec, 9702683 turns.
+Finished random in: 3546.9836523532867 sec, 9262048 turns.
+Finished random in: 1371.220624923706 sec, 3591527 turns.
+Finished random in: 6526.637670993805 sec, 16946482 turns.
+Finished random in: 2253.3386619091034 sec, 5832414 turns.
+Finished random in: 1233.0607030391693 sec, 3221314 turns.
+Finished random in: 2014.3408930301666 sec, 5258808 turns.
+Finished random in: 1181.8639850616455 sec, 3062773 turns.
+Finished random in: 1884.4028105735779 sec, 4895610 turns.
+Finished random in: 1663.563278913498 sec, 4309427 turns.
+Finished random in: 4927.9090032577515 sec, 12769365 turns.
+Finished random in: 331.7197871208191 sec, 860555 turns.
+Finished random in: 2201.849689722061 sec, 5698651 turns.
