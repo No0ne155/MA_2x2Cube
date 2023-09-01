@@ -278,6 +278,11 @@ class Cube:
                 self.p4 = rot(self.p4,ax,agl)
                 self.p5 = rot(self.p5,ax,agl)
                 self.p6 = rot(self.p6,ax,agl)
+    
+    def smootht(self, turn, agl):
+        for i in range(agl):
+            self.turn(f'{turn}',i)
+            pygame.time.wait(10)
                 
 # Setup the 8 Cubes
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS,1)
@@ -564,10 +569,17 @@ def scramble():
         elif dire[dir] == 180:
             add = '2'
         scramblelst =scramblelst + turn.upper()+add+' '
-        for i in range(1, 9):
-            cubelet = globals()['cube{}'.format(i)]
-            cubelet.turn(f'{turn}',dire[dir])
+        for k in range(30):
+            d = dire[dir]
+            for i in range(1, 9):
+                window.fill((0,0,0))
+                cubelet = globals()['cube{}'.format(i)]
+                cubelet.turn(f'{turn}',(d/30))
+                buffer()
+                pygame.display.update()
+            pygame.time.wait(1)
     print(scramblelst)
+
 
 # py222 solver
 def solve222():
@@ -584,23 +596,38 @@ def solve222():
     for i in range(len(algs)):
         if len(algs[i]) == 2:
             if algs[i][1] == '2':
-                for l in range(1, 9):
-                    cubelet = globals()['cube{}'.format(l)]
-                    cubelet.turn(f'{algs[i][0]}',180)
+                for j in range(90):
+                    for k in range(1, 9):
+                        window.fill((0,0,0))
+                        cubelet = globals()['cube{}'.format(k)]
+                        cubelet.turn(f'{algs[i][0]}',2)
+                        buffer()
+                        pygame.display.update()
+                    pygame.time.wait(1)
             elif algs[i][1] == "'":
-                for l in range(1, 9):
-                    cubelet = globals()['cube{}'.format(l)]
-                    cubelet.turn(f'{algs[i][0]}',90)
+                for j in range(45):
+                    for k in range(1, 9):
+                        window.fill((0,0,0))
+                        cubelet = globals()['cube{}'.format(k)]
+                        cubelet.turn(f'{algs[i][0]}',2)
+                        buffer()
+                        pygame.display.update()
+                    pygame.time.wait(1)
         else:
-            for l in range(1, 9):
-                cubelet = globals()['cube{}'.format(l)]
-                cubelet.turn(f'{algs[i]}',-90)
+            for j in range(45):
+                for k in range(1, 9):
+                    window.fill((0,0,0))
+                    cubelet = globals()['cube{}'.format(k)]
+                    cubelet.turn(f'{algs[i][0]}',-2)
+                    buffer()
+                    pygame.display.update()
+                pygame.time.wait(1)
     t1 = time.time()
     ti = t1 - t0
     with open(file_path2, 'a') as file:
         file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
     print(ti, len(algs))
-                              
+                
 # Welcome Message
 def welcome():
     print('Wilkommen zu meinem 2x2 Cube simulator')
@@ -667,58 +694,118 @@ while running == True:
                 running = False   
             elif event.key == pygame.K_r:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('r',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('r',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('r',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('r',1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_l:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('l',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('l',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('l',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('l',1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_u:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('u',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('u',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('u',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('u',1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_d:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('d',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('d',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('d',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('d',1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_f:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('f',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('f',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('f',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('f',1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_b:
                 if not shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('b',-90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('b',-1)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
                 if shift:
-                    for i in range(1, 9):
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('b',90)
+                    for j in range(90):
+                        for i in range(1, 9):
+                            window.fill((0,0,0))
+                            cubelet = globals()['cube{}'.format(i)]
+                            cubelet.turn('b',90)
+                            buffer()
+                            pygame.display.update()
+                        pygame.time.wait(1)
             elif event.key == pygame.K_1:
                 scramble()
             elif event.key == pygame.K_2:
@@ -734,6 +821,16 @@ while running == True:
                 solveR2()
             elif event.key == pygame.K_4:
                 solve222()
+            elif event.key == pygame.K_5:
+                for j in range(90):
+                    for i in range(1, 9):
+                        window.fill((0,0,0))
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('u',-1)
+                        buffer()
+                        pygame.display.update()
+                        print(f'time {j}')
+                    pygame.time.wait(1)
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
