@@ -41,8 +41,6 @@ scramblelst = ""
 cube222 = py222.initState()
 add = ''
 oma = False
-solvedoma = False
-omac = False
 
 # Centerpoints
 xp = np.array([ 1.0,0.0,0.0])
@@ -353,7 +351,6 @@ def checker():
                         if np.allclose(cube4.vecz, cube8.vecz, 0.00001) == True:
                             if np.allclose(cube8.vecy, cube5.vecy, 0.00001) == True:
                                 mark('t')
-                                omac = True 
                             else:
                                 mark('f')                        
                         else:
@@ -422,7 +419,7 @@ def solveR():
         with open(file_path, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
-# Def to check OneMoveAway
+# Def to check OneMoveAway  
 def omaCheck():
     global oma
 
@@ -448,11 +445,6 @@ def omaCheck():
                     if np.allclose(cube6.vecy, cube7.vecy, 0.00001) == True:
                         if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
                             oma = True
-    if oma == True:
-        for i in range(1, 9):
-            cubelet = globals()['cube{}'.format(i)]
-            cubelet.turn('r',90)
-        print('oma')
         
 # Def more efficient random
 def solveR2():
@@ -463,11 +455,8 @@ def solveR2():
     lastTurn = 'x'
     while state == False and run == True:
         window.fill((0,0,0))
-        print(oma)
         omaCheck()
-        print(oma)
-        if oma == False:
-            print(oma)
+        if oma == False and state == False:
             dir = randint(0,2)
             dire = [-90, 90, 180]
             if lastTurn == 'x':
@@ -487,36 +476,73 @@ def solveR2():
                 k = randint(0,3)
                 turn = t[k]
             lastTurn=turn
-            print(turn)
             for i in range(1, 9):
                 cubelet = globals()['cube{}'.format(i)]
                 cubelet.turn(f'{turn}', dire[dir])
             count = count+1
+            print(turn, dire[dir])
+
         elif oma == True:
-            print(oma)
             for i in range(1, 9):
                 cubelet = globals()['cube{}'.format(i)]
                 cubelet.turn('u',-90)
-            print('c1')
             checker()
-            if omac == False:
+            if state == False and oma == True:
                 for i in range(1, 9):
                     cubelet = globals()['cube{}'.format(i)]
                     cubelet.turn('u',-90)
-                print('c2')
                 checker()
-                if omac == False:
+                if state == False and oma == True:
                     for i in range(1, 9):
                         cubelet = globals()['cube{}'.format(i)]
                         cubelet.turn('u',-90)
-                    print('c3')
                     checker()
-                    if omac == False:
+                    if state == False and oma == True:
                         for i in range(1, 9):
                             cubelet = globals()['cube{}'.format(i)]
                             cubelet.turn('u',-90)
-                        print('c4')
                         checker()
+                        if state == False and oma == True:
+                            for i in range(1, 9):
+                                cubelet = globals()['cube{}'.format(i)]
+                                cubelet.turn('r',-90)
+                            checker()
+                            if state == False and oma == True:
+                                for i in range(1, 9):
+                                    cubelet = globals()['cube{}'.format(i)]
+                                    cubelet.turn('r',-90)
+                                checker()
+                                if state == False and oma == True:
+                                    for i in range(1, 9):
+                                        cubelet = globals()['cube{}'.format(i)]
+                                        cubelet.turn('r',-90)
+                                    checker()
+                                    if state == False and oma == True:
+                                        for i in range(1, 9):
+                                            cubelet = globals()['cube{}'.format(i)]
+                                            cubelet.turn('r',-90)
+                                        checker()
+                                        if state == False and oma == True:
+                                            for i in range(1, 9):
+                                                cubelet = globals()['cube{}'.format(i)]
+                                                cubelet.turn('f',-90)
+                                            checker()
+                                            if state == False and oma == True:
+                                                for i in range(1, 9):
+                                                    cubelet = globals()['cube{}'.format(i)]
+                                                    cubelet.turn('f',-90)
+                                                checker()
+                                                if state == False and oma == True:
+                                                    for i in range(1, 9):
+                                                        cubelet = globals()['cube{}'.format(i)]
+                                                        cubelet.turn('f',-90)
+                                                    checker()
+                                                    if state == False and oma == True:
+                                                        for i in range(1, 9):
+                                                            cubelet = globals()['cube{}'.format(i)]
+                                                            cubelet.turn('f',-90)
+                                                        checker()
+                        
         display_text(f"Moves: {count}", 370, 50)
         if loop == True:
             display_text('L', 10,10)
