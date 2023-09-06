@@ -10,6 +10,12 @@ from pygame import font
 
 # Monte carlo simulation
 # Abweichung durch rotation
+# Nein
+
+# !! FRAGEN !!
+
+# Codeabschnitte Quellen verlinken?
+
 
 pygame.init()
 # Colors
@@ -35,6 +41,7 @@ font_path = pygame.font.get_default_font()  # This gets the path of the default 
 myfont = pygame.font.Font(font_path, 26)
 file_path = 'cubedata.txt'
 file_path2 = 'cubedata2.txt'
+file_path3 = 'cubedata3.txt'
 loop = False
 agl = 10
 scramblelst = ""
@@ -480,7 +487,6 @@ def solveR2():
                 cubelet = globals()['cube{}'.format(i)]
                 cubelet.turn(f'{turn}', dire[dir])
             count = count+1
-            print(turn, dire[dir])
 
         elif oma == True:
             for i in range(1, 9):
@@ -577,7 +583,7 @@ def solveR2():
     print(f'Or {th} hours!!')
     print(f'Solved is {state}')
     if state:
-        with open(file_path2, 'a') as file:
+        with open(file_path3, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
 # Def to scramble the cube
@@ -848,15 +854,7 @@ while running == True:
             elif event.key == pygame.K_4:
                 solve222()
             elif event.key == pygame.K_5:
-                for j in range(90):
-                    for i in range(1, 9):
-                        window.fill((0,0,0))
-                        cubelet = globals()['cube{}'.format(i)]
-                        cubelet.turn('u',-1)
-                        buffer()
-                        pygame.display.update()
-                        print(f'time {j}')
-                    pygame.time.wait(1)
+                print(cube1.vec)
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
