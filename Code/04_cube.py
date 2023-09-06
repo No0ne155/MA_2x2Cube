@@ -76,7 +76,6 @@ running = True
 while running == True:
     clock.tick(60)
     window.fill((0,0,0))
-
     pygame.draw.circle(window, (255, 0, 0), (WINDOW_SIZE/2, WINDOW_SIZE/2), 5)
 
     cube1.drawpoint()
