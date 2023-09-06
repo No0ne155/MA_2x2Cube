@@ -371,3 +371,10 @@ Finished random in: 2230.8688576221466 sec, 5872265 turns.
 Finished random in: 0.0015473365783691406 sec, 0 turns.
 Finished random in: 93.5268042087555 sec, 249271 turns.
 Finished random in: 0.0010077953338623047 sec, 0 turns.
+Finished random in: 0.0 sec, 0 turns.
+Finished random in: 1191.0580959320068 sec, 817311 turns.
+Finished random in: 0.000995635986328125 sec, 0 turns.
+Finished random in: 5784.952667713165 sec, 3831434 turns.
+Finished random in: 0.000995635986328125 sec, 0 turns.
+Finished random in: 205.1427059173584 sec, 216412 turns.
+Finished random in: 0.001001119613647461 sec, 0 turns.
