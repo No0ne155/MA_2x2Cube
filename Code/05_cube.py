@@ -77,7 +77,7 @@ class Cube:
                 self.vec[2] = y * s + z * c
                 self.vecx[1] = xy * c - xz * s
                 self.vecx[2] = xy * s + xz * c
-                self.vecy[1] = yy * c - yz * s
+                self.vecy[1] = yy * c - yz * s  
                 self.vecy[2] = yy * s + yz * c
                 self.vecz[1] = zy * c - zz * s
                 self.vecz[2] = zy * s + zz * c
@@ -136,7 +136,8 @@ class Cube:
             if self.vec[0] >0:
                 print('turn r')
                 u = np.array([2.0, 0.0, 0.0])
-                theta = np.radians(90)
+                theta = 90
+                #theta = np.radians(90)
                 u_norm = u/np.linalg.norm(u)
                 # Rotationsmatrix
                 rotation_matrix = np.array([[np.cos(theta) + u_norm[0]**2 * (1 - np.cos(theta)),
@@ -180,13 +181,13 @@ while running == True:
     window.fill((0,0,0))
 
     # Draw Center point
-    pygame.draw.circle(window, (255, 0, 0), (WINDOW_SIZE/2, WINDOW_SIZE/2), 5)
-
+    pygame.draw.circle(window, (0,183,235), (WINDOW_SIZE/2, WINDOW_SIZE/2), 5)
     # Draw all the points and lines
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.drawpoint()
-    
+
+    cube6.drawpoint()
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
         cubelet.fill()

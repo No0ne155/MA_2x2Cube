@@ -311,7 +311,7 @@ def buffer():
     sort.append([cube7.vec[2],7])
     sort.append([cube8.vec[2],8])
     
-    sorted_list = sorted(sort, key=lambda x: x[0], reverse=True)
+    sorted_list = sorted(sort, key=lambda x: x[0], reverse = True)
 
     for i in range(1, 8):
         cubelet = globals()['cube{}'.format(sorted_list[i][1])]
@@ -548,6 +548,7 @@ def solveR2():
                                                             cubelet = globals()['cube{}'.format(i)]
                                                             cubelet.turn('f',-90)
                                                         checker()
+            count = count+1
                         
         display_text(f"Moves: {count}", 370, 50)
         if loop == True:
