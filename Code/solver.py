@@ -55,7 +55,7 @@ def printMoves(moves):
   moveStr = ""
   for m in moves:
     moveStr += moveStrs[m] + " "
-  #print(moveStr)
+  print(moveStr)
   solvedalg = solvedalg + moveStr + 'gap'
 
 # solve a cube state
@@ -64,20 +64,20 @@ def solveCube(s):
   py222.printCube(s)
 
   # FC-normalize stickers
-  #print("normalizing stickers...")
+  print("normalizing stickers...")
   s = py222.normFC(s)
 
   # generate pruning tables
-  #print("generating pruning tables...")
+  print("generating pruning tables...")
   genOTable(py222.initState(), 0)
   genPTable(py222.initState(), 0)
 
   # run IDA*
-  #print("searching...")
+  print("searching...")
   solved = False
   depth = 1
   while depth <= 11 and not solved:
-    #print("depth {}".format(depth))
+    print("depth {}".format(depth))
     solved = IDAStar(s, depth, [])
     depth += 1
 

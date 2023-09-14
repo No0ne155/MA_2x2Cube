@@ -181,7 +181,7 @@ def indexOP(sOP):
 # print state of the cube
 def printCube(s):
   pass
-'''
+
   print("      ┌──┬──┐")
   print("      │ {}│ {}│".format(s[0], s[1]))
   print("      ├──┼──┤")
@@ -195,17 +195,17 @@ def printCube(s):
   print("      ├──┼──┤")
   print("      │ {}│ {}│".format(s[14], s[15]))
   print("      └──┴──┘")
-'''
+
 if __name__ == "__main__":
   # get solved state
   s = initState()
-  #printCube(s)
+  printCube(s)
   # do some moves
   s = doAlgStr(s, "x y R U' R' U' F2 U' R U R' U F2")
-  #printCube(s)
+  printCube(s)
   # normalize stickers relative to DLB
   s = normFC(s)
-  #printCube(s)
+  printCube(s)
 
  
 
