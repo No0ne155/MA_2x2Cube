@@ -136,7 +136,7 @@ class Cube:
             if self.vec[0] >0:
                 print('turn r')
                 u = np.array([2.0, 0.0, 0.0])
-                theta = 90
+                theta = np.radians(90)
                 #theta = np.radians(90)
                 u_norm = u/np.linalg.norm(u)
                 # Rotationsmatrix

@@ -167,7 +167,7 @@ class Cube:
             elif solt[1][1]==5:
                 pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
                 pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
-        
+        pygame.draw.line(window, (0,183,235), (300,0), (300,600))
     # Turning the Cublet in a certain direction with a certain angle
     def turn(self, turn, agl):
         if turn == 'r':
@@ -698,6 +698,7 @@ while running == True:
     # Set Timer
     clock.tick(60)
     window.fill((0,0,0))
+    
 
     buffer()
     checker()
@@ -735,6 +736,7 @@ while running == True:
                             buffer()
                             pygame.display.update()
                         pygame.time.wait(1)
+                        
                 if shift:
                     for j in range(90):
                         for i in range(1, 9):
@@ -839,6 +841,15 @@ while running == True:
                             buffer()
                             pygame.display.update()
                         pygame.time.wait(1)
+            elif event.key == pygame.K_a:
+                for j in range(45):
+                    for i in range(1, 9):
+                        window.fill((0,0,0))
+                        cubelet = globals()['cube{}'.format(i)]
+                        cubelet.turn('r',-1)
+                        buffer()
+                        pygame.display.update()
+                    pygame.time.wait(1)
             elif event.key == pygame.K_1:
                 scramble()
             elif event.key == pygame.K_2:
@@ -860,7 +871,7 @@ while running == True:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
 
-        
+    pygame.draw.line(window, (0,183,235), (300,0), (300,600), 3)
     if loop:
         scramble()
         solveR()
