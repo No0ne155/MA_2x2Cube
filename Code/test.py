@@ -1,12 +1,17 @@
 # Die beiden Programme Importieren
-import py222
-import solver
+import numpy as np
 
-# Einen Cube genannt myCube erstellen, und in Grundposition definieren
-Cube = py222.initState()
+a = ['u', 'r', 'f']
 
-# Dr Cube führt nun den folgenden Bewegungsablauf durch
-Cube = py222.doAlgStr(Cube, "R U2 R2 F2 R' F2 R F R")
+for b in range(len(a)):
+    for c in range(len(a)):
+        for d in range(len(a)):
+            for  e in range(len(a)):
+                for f in range(len(a)):
+                    for g in range(len(a)):
+                        for h in range(len(a)):
+                            for i in range(len(a)):
+                                for j in range(len(a)):
+                                    for k in range(len(a)):
+                                        print(a[b], a[c], a[d], a[e], a[f], a[g], a[h], a[i], a[j], a[k])
 
-# Der Cube wird vom solver-Programm gelöst
-solver.solveCube(Cube)

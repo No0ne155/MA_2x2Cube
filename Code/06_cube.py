@@ -167,7 +167,6 @@ class Cube:
             elif solt[1][1]==5:
                 pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
                 pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
-        pygame.draw.line(window, (0,183,235), (300,0), (300,600))
     # Turning the Cublet in a certain direction with a certain angle
     def turn(self, turn, agl):
         if turn == 'r':
@@ -349,7 +348,6 @@ def mark(res):
 
 # Checker, if the correct pieces are Neighbours = Cube solved
 def checker():
-    global omac
     if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
         if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
             if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
@@ -587,6 +585,36 @@ def solveR2():
         with open(file_path3, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
+# Def Brute Force Solver
+def solveB():
+    count = 0
+    urf = ['u', 'r', 'f']
+    dir = [-90, 90, 180]
+    t0 = time.time()
+    for it in range(3):
+        for id in range(3):
+            for i in range(1, 9):
+                cubelet = globals()['cube{}'.format(i)]
+                cubelet.turn(urf[it],dir[id])
+            print(urf[it],dir[id])
+            checker()
+            if state == False:
+                for i in range(1, 9):
+                    cubelet = globals()['cube{}'.format(i)]
+                    cubelet.turn(urf[it],(dir[id]*-1))
+                print(urf[it],(dir[id]*-1))
+
+            elif state == True:
+                window.fill((0,0,0))
+                buffer()
+                pygame.display.update()
+                print('Solved!')
+                pygame.time.wait(2000)
+                exit()
+
+            
+
+
 # Def to scramble the cube
 def scramble():
     global scramblelst
@@ -681,6 +709,7 @@ def display_text(text, x, y):
     text_surface = myfont.render(text, True, WEISS)
     window.blit(text_surface, (x, y))
 
+# Setup Moves
 def setupR():
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
@@ -866,12 +895,11 @@ while running == True:
             elif event.key == pygame.K_4:
                 solve222()
             elif event.key == pygame.K_5:
-                print(cube1.vec)
+                solveB()
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
                 shift = False  # Reset the shift_pressed flag
 
-    pygame.draw.line(window, (0,183,235), (300,0), (300,600), 3)
     if loop:
         scramble()
         solveR()
