@@ -8,17 +8,9 @@ from math import*
 from random import*
 from pygame import font
 
-# Monte carlo simulation
-# Abweichung durch rotation
-# Nein
-
-# !! FRAGEN !!
-
-# Codeabschnitte Quellen verlinken?
-
-
+# pygame initialisieren
 pygame.init()
-# Colors
+# colors
 ORANGE  = ( 255, 140, 0)
 ROT     = ( 255, 0, 0)
 GRUEN   = ( 0, 255, 0)
@@ -29,7 +21,7 @@ BLAU    = (0,0,255)
 CLR = (0, 255,255)
 WINDOW_SIZE =  600
 
-# Variables
+# variables
 scale = 100
 window = pygame.display.set_mode( (WINDOW_SIZE, WINDOW_SIZE) )
 clock = pygame.time.Clock()
@@ -37,7 +29,7 @@ center = [(WINDOW_SIZE/2),(WINDOW_SIZE/2)]
 state = True
 shift = False
 turns = ['u','d','f','b','r','l']
-font_path = pygame.font.get_default_font()  # This gets the path of the default font on your system
+font_path = pygame.font.get_default_font()
 myfont = pygame.font.Font(font_path, 26)
 file_path = 'cubedata.txt'
 file_path2 = 'cubedata2.txt'
@@ -49,7 +41,7 @@ cube222 = py222.initState()
 add = ''
 oma = False
 
-# Centerpoints
+# centerpoints
 xp = np.array([ 1.0,0.0,0.0])
 xn = np.array([-1.0,0.0,0.0])
 yp = np.array([0.0, 1.0,0.0])
@@ -57,28 +49,28 @@ yn = np.array([0.0,-1.0,0.0])
 zp = np.array([0.0,0.0, 1.0])
 zn = np.array([0.0,0.0,-1.0])
 
-# Class Cube
+# class cube
 class Cube:
-    # Innitialise Cube, with all relevant Variables
+    # initialise cube, mit allen relevanten variabeln
     def __init__(self,vec, vec1, vec2, vec3, p4,p5,p6, coX, coY, coZ, nr) -> None:
-        # Vector from Center to Corner
+        # Vector von mitte zu ecke
         self.vec = vec 
-        # Vectors from Corners to Edges
+        # vektoren von ecke zu kante
         self.vecx = vec1 + vec
         self.vecy = vec2 + vec
         self.vecz = vec3 + vec
-        # Vectors from Center to Middle
+        # vektoren von mitte zu mitte
         self.p4 = p4
         self.p5 = p5
         self.p6 = p6
-        # Colors for X, Y and Z
+        # farben für x, y und z seite
         self.coX = coX
         self.coY = coY
         self.coZ = coZ
         
         self.nr = nr
 
-    # Rotationalgorithm for all points
+    # rotationsalgorithmus für cube-rotation
     def rotate(self, angle, axis):
             rad = angle * pi / 180.0
             c = cos(rad)
@@ -135,7 +127,7 @@ class Cube:
                 self.p6[0] = p6x * c + p6z * s
                 self.p6[2] = -p6x * s + p6z * c
 
-    # Color fill algorithm, with z-buffering
+    # farben einfüllen und z-buffer
     def fill(self):
         sor = []
         sor.append([self.p4[2],4])
@@ -167,7 +159,7 @@ class Cube:
             elif solt[1][1]==5:
                 pygame.draw.polygon(window, self.coZ, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300),(self.p5[0]*100+300, self.p5[1]*100+300), (self.vecx[0]*100+300, self.vecx[1]*100+300)])
                 pygame.draw.polygon(window, self.coY, [(self.vec[0]*100+300, self.vec[1]*100+300), (self.vecy[0]*100+300, self.vecy[1]*100+300),(self.p4[0]*100+300, self.p4[1]*100+300), (self.vecz[0]*100+300, self.vecz[1]*100+300)])
-    # Turning the Cublet in a certain direction with a certain angle
+    # drehen der teile um eine achse
     def turn(self, turn, agl):
         if turn == 'r':
             if self.vec[0] >0:
@@ -288,7 +280,7 @@ class Cube:
             self.turn(f'{turn}',i)
             pygame.time.wait(10)
                 
-# Setup the 8 Cubes
+# den 8 cubes ihre werte zuweisen
 cube1 = Cube(np.array([-1.0,-1.0, 1.0]), np.array([ 1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xn), np.copy(yn), np.copy(zp),BLAU, ORANGE, WEISS,1)
 cube2 = Cube(np.array([ 1.0,-1.0, 1.0]), np.array([-1,0,0]), np.array([0, 1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yn), np.copy(zp),BLAU, ROT, WEISS,2)
 cube3 = Cube(np.array([ 1.0, 1.0, 1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0,-1]), np.copy(xp), np.copy(yp), np.copy(zp),BLAU, ROT, GELB,3)
@@ -298,7 +290,7 @@ cube6 = Cube(np.array([ 1.0,-1.0,-1.0]), np.array([-1,0,0]), np.array([0, 1,0]),
 cube7 = Cube(np.array([ 1.0, 1.0,-1.0]), np.array([-1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xp), np.copy(yp), np.copy(zn),GRUEN, ROT, GELB,7)
 cube8 = Cube(np.array([-1.0, 1.0,-1.0]), np.array([ 1,0,0]), np.array([0,-1,0]), np.array([0,0, 1]), np.copy(xn), np.copy(yp), np.copy(zn),GRUEN, ORANGE, GELB,8)
 
-# Def to Calculate the order of the piece rendering
+# z-buffer
 def buffer():
     sort = []
     sort.append([cube1.vec[2],1])
@@ -316,7 +308,7 @@ def buffer():
         cubelet = globals()['cube{}'.format(sorted_list[i][1])]
         cubelet.fill()
 
-# Def to Calculate the new position after rotating a certain vec around axis
+# definion für rotationsberechnung
 def rot(vec, ax,agl):
     v_x = vec[0]
     v_y = vec[1]
@@ -334,7 +326,7 @@ def rot(vec, ax,agl):
     newvec = np.array([v_rotated_x, v_rotated_y, v_rotated_z])
     return newvec
 
-# Def to show, if the cube solved
+# zeichen ob gelöst oder nicht
 def mark(res):
     global state
     if res == 't':
@@ -346,7 +338,7 @@ def mark(res):
         pygame.draw.line(window, ROT, (110,30), (50,90), 5)
         state = False
 
-# Checker, if the correct pieces are Neighbours = Cube solved
+# überprüfung ob alle teile untereinander an der richtigen position sind
 def checker():
     if np.allclose(cube1.vecx, cube2.vecx, 0.00001) == True:
         if np.allclose(cube5.vecx, cube6.vecx, 0.00001) == True:
@@ -371,7 +363,7 @@ def checker():
     else:
         mark('f')
 
-# Def to solve Random
+# zufallsalgorithmus der den cube löst
 def solveR():
     global loop
     count = 0
@@ -424,7 +416,7 @@ def solveR():
         with open(file_path, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
-# Def to check OneMoveAway  
+# überprüfung ob "one move away"
 def omaCheck():
     global oma
 
@@ -451,7 +443,7 @@ def omaCheck():
                         if np.allclose(cube2.vecz, cube6.vecz, 0.00001) == True:
                             oma = True
         
-# Def more efficient random
+# optimierter zufallsalgorithmus
 def solveR2():
     global loop
     count = 0
@@ -585,37 +577,7 @@ def solveR2():
         with open(file_path3, 'a') as file:
             file.write(f'Finished random in: {ts} sec, {count} turns.'+'\n')
 
-# Def Brute Force Solver
-def solveB():
-    count = 0
-    urf = ['u', 'r', 'f']
-    dir = [-90, 90, 180]
-    t0 = time.time()
-    for it in range(3):
-        for id in range(3):
-            for i in range(1, 9):
-                cubelet = globals()['cube{}'.format(i)]
-                cubelet.turn(urf[it],dir[id])
-            print(urf[it],dir[id])
-            checker()
-            if state == False:
-                for i in range(1, 9):
-                    cubelet = globals()['cube{}'.format(i)]
-                    cubelet.turn(urf[it],(dir[id]*-1))
-                print(urf[it],(dir[id]*-1))
-
-            elif state == True:
-                window.fill((0,0,0))
-                buffer()
-                pygame.display.update()
-                print('Solved!')
-                pygame.time.wait(2000)
-                exit()
-
-            
-
-
-# Def to scramble the cube
+# verdrehalgorithmus
 def scramble():
     global scramblelst
     for j in range(25):
@@ -642,7 +604,7 @@ def scramble():
     print(scramblelst)
 
 
-# py222 solver
+# py222 adaption
 def solve222():
     global cube222
     t0 = time.time()
@@ -689,27 +651,28 @@ def solve222():
         file.write(f'Finished random in: {ti} sec, {len(algs)} turns.'+'\n')
     print(ti, len(algs))
                 
-# Welcome Message
+# wilkommensnachricht
 def welcome():
     print('Wilkommen zu meinem 2x2 Cube simulator')
     print('Um zu beginnen, können sie den Cube mit den Pfeiltasten bewegen')
     print('Um eine Drehung vorzunehmen, drücken Sie eine der folgenden Tasten:')
-    print(turns)
+    print('U, D, L, R, F, B')
     print('Dies nimmt eine Rotation der entsprechenden seite in Uhrzeigerrichtung vor')
     print('Um eine Drehung gegen den Uhrzeigersinn vorzunehmen, drücken Sie zusätzlich "Shift Links"')
     print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
     print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
-    print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen, und selbst zu lösen beginnen.')
+    print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen.')
     print('Mit der Taste "W" könnens Sie in den Loop eintreten, d.h. nach dem lösen, verdreht er sich wieder, und beginnt zu lösen.')
     print('Mit der Taste "3" können Sie einen Effizienteren Zufallsalgorithmus zum lösen wählen')
     print('Mit der Taste "4" können Sie den Cube mit einem Effizienzsolver lösen.')
+    print('Taste 4 bitte nur nach neustarten des Programms und nur dem Verdrehalgorithmus betätigen.')
 
-# Def to show text on Screen
+# definition die text am bildschirm anzeigt
 def display_text(text, x, y):
     text_surface = myfont.render(text, True, WEISS)
     window.blit(text_surface, (x, y))
 
-# Setup Moves
+# cube in position bringen
 def setupR():
     for i in range(1, 9):
         cubelet = globals()['cube{}'.format(i)]
@@ -720,19 +683,20 @@ def setupR():
     
 setupR()
 welcome()
-# Main Loop
+
+# haupt-schleife
 running = True
 agl = 5
 while running == True:
-    # Set Timer
+    # framerate begrenzen
     clock.tick(60)
     window.fill((0,0,0))
-    
+
 
     buffer()
     checker()
 
-    # Key Inputs
+    # tastenabfragen
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -894,11 +858,9 @@ while running == True:
                 solveR2()
             elif event.key == pygame.K_4:
                 solve222()
-            elif event.key == pygame.K_5:
-                solveB()
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LSHIFT:
-                shift = False  # Reset the shift_pressed flag
+                shift = False
 
     if loop:
         scramble()
