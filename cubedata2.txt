@@ -78,3 +78,6 @@ Finished random in: 8.68022894859314 sec, 10 turns.
 Finished random in: 7.559330463409424 sec, 9 turns.
 Finished random in: 6.88843846321106 sec, 9 turns.
 Finished random in: 7.136822462081909 sec, 9 turns.
+Finished random in: 7.0153467655181885 sec, 6 turns.
+Finished random in: 5.482421875 sec, 7 turns.
+Finished random in: 7.445236444473267 sec, 9 turns.
