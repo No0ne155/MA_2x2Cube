@@ -15,7 +15,7 @@ Natürlich muss auch Python installiert sein.
 
 ## Verwendbare Tasten
 
-Die Programme funktionieren mit Pfeiltasten, um den gesamten Cube zu bewegen, und mit *U,F,D,B,R,L* um die korrespondierende Seite gemäss WCA-Notation zu bewegen. Der Englische Anfangsbuchstabe für die Seite wird verwendet.
+Die Programme funktionieren mit Pfeiltasten, um den gesamten Cube zu bewegen, und mit *U,F,D,B,R,L* um die korrespondierende Seite gemäss WCA-Notation zu bewegen. Der Englische Anfangsbuchstabe für die Seite wird verwendet. Beim drücken einer Taste bewegt sich die Seite im Uhrzeigersinn. In kombination mit **Shift Links** dreht sich die Seite gegen den Uhrzeigersinn.
 
 ## Daten
 Die Dokumente *cubedata*, *cubedata2* und *cubedata3* enthalten meine vollständigen gesammelten Daten die ich in der Arbeit auch auswertete.
