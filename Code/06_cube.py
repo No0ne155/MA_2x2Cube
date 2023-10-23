@@ -661,9 +661,9 @@ def welcome():
     print('Um eine Drehung gegen den Uhrzeigersinn vorzunehmen, drücken Sie zusätzlich "Shift Links"')
     print('Um den Cube verdrehen zu lassen, drücken Sie die "1"')
     print('Um den Cube von einem Zufallsgenerator lösen zu lassen, drücken sie die "2"')
-    print('Während dem lösen durch zufalls, können Sie den Prozess mit "0" abbrechen.')
-    print('Mit der Taste "W" könnens Sie in den Loop eintreten, d.h. nach dem lösen, verdreht er sich wieder, und beginnt zu lösen.')
-    print('Mit der Taste "3" können Sie einen Effizienteren Zufallsalgorithmus zum lösen wählen')
+    print('Während dem Lösen durch zufalls, können Sie den Prozess mit "0" abbrechen.')
+    print('Mit der Taste "W" könnens Sie in den Loop eintreten, d.h. nach dem Lösen, verdreht er sich wieder, und beginnt zu lösen.')
+    print('Mit der Taste "3" können Sie einen Effizienteren Zufallsalgorithmus zum Lösen wählen')
     print('Mit der Taste "4" können Sie den Cube mit einem Effizienzsolver lösen.')
     print('Taste 4 bitte nur nach neustarten des Programms und nur dem Verdrehalgorithmus betätigen.')
 
