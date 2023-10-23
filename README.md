@@ -1,4 +1,4 @@
-# Maturaarbeit: 2x2 Zauberwürfel in Pygame zeichnen, steuern und lösen
+# Maturaarbeit: 2x2-Zauberwürfel in Pygame zeichnen, steuern und lösen
 
 Als Maturaarbeit programmierte ich einen 2x2-Zauberwürfel in Python Pygame. Alle zugehörigen Dokumente, sowie die fertige Maturaarbeit.
 
